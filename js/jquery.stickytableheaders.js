@@ -46,10 +46,6 @@
 				var scrollLeft = $(window).scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
-					// hacking the orig
-					//originalHeaderRow.css("left", (offset.left - scrollLeft) + "px");
-					//originalHeaderRow.css("position", "fixed");
-
 					floatingHeaderRow.css("left", (offset.left - scrollLeft) + "px");
 					floatingHeaderRow.css("display", "block");
 
