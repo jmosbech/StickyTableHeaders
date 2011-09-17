@@ -1,0 +1,92 @@
+body
+{
+	width: 960px;
+	margin: 0 auto;
+}
+
+
+body, a
+{
+	font-family: Arial,Helvetica,sans-serif;
+	font-size: 14px;
+	color: #555;
+}
+table
+{
+	width: 100%;
+	border-collapse: collapse;
+}
+th
+{
+	text-align: left;
+	text-transform: uppercase;
+	line-height: 2em;
+	color: #FFF;
+	background-color: #555;
+}
+
+.number
+{
+	text-align: right;
+	padding-right: 10px;
+}
+
+tbody td
+{
+	padding: 5px 0 20px 0;
+	line-height: 18px;
+	border-top: 1px solid #E0E0E0;
+}
+td > div
+{
+	position: relative;
+}
+tbody tr:nth-child(2n)
+{
+	background-color: #F7F7F7;
+}
+tbody tr:hover
+{
+	background-color: #EEEEEE;
+}
+tr .customer
+{
+	font-weight: bold;
+}
+
+#rowactions
+{
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	bottom: -20px;
+	font-size: 12px;
+}
+#rowactions li
+{
+	display: inline-block;
+	margin-right: 15px;
+}
+#rowactions li a
+{
+	color: #78A4CE;
+	padding-left: 20px;
+}
+#rowactions .edit
+{
+	background: url('silk/icons/pencil.png') 0 0 no-repeat;
+}
+#rowactions .delete
+{
+	background: url('silk/icons/cross.png') 0 0 no-repeat;
+}
+#rowactions .preview
+{
+	background: url('silk/icons/page.png') 0 0 no-repeat;
+}
+
+
+.tableWithFloatingHeader thead tr
+{
+	z-index: 100;
+}

@@ -1,0 +1,5 @@
+/*globals $ window document */
+
+$(function () {
+
+});

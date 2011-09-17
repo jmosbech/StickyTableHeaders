@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html>
+<head>
+	<title>Table Playground</title>
+	<link rel="stylesheet" media="all" href="css/oocss.css" />
+	<link rel="stylesheet" media="all" href="css/custom.css" />
+</head>
+<body>
+	<h1>
+		Table playground</h1>
+	<div class="row">
+		<div class="cell s1of5">sidebar</div>
+		<div class="cell s3of5">
+			<table class="tableWithFloatingHeader">
+				<thead>
+					<tr>
+						<th class="checkbox">
+							<input type="checkbox" />
+						</th>
+						<th>
+							Number
+						</th>
+						<th>
+							Info
+						</th>
+						<th class="date">
+							Due Date
+						</th>
+						<th class="number">
+							Total
+						</th>
+					</tr>
+				</thead>
+				<tbody id="lines">
+				</tbody>
+			</table>
+		</div>
+		<div class="cell s1of5 lastCell">
+			sidebar
+		</div>
+	</div>
+	<div style="height: 4000px">
+		lots of content down here
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+	<script src="js/jquery.stickytableheaders.js"></script>
+	<script id="lineTemplate" type="text/x-jquery-tmpl"> 
+			<tr>
+				<td>
+					<input type="checkbox" />
+				</td>
+				<td>
+					<a href="">${number}</a>
+				</td>
+				<td>
+					<div>
+						<a href="" class="customer">${customer}</a><br />
+						Att. ${attention}
+					</div>
+				</td>
+				<td>
+					${date}
+				</td>
+				<td class="number">
+					${total}
+				</td>
+			</tr>
+	</script>
+	<script>
+		$(function () {
+			var i = 100;
+			var customers = ["Apple Computers", "Dell", "Microsoft", "Oracle"];
+			var contacts = ["Steve Jobs", "Bill Gates", "Larry Ellison", "Michael Dell"];
+
+			var lines = []
+
+			var startMillis = new Date(2000, 0, 1).getTime();
+			var endMillis = new Date(2011, 0, 1).getTime();
+			for (var j = 0; j < 20; j++) {
+				var d = new Date(startMillis + Math.random() * (endMillis - startMillis));
+				lines.push({
+					number: i++,
+					customer: customers[Math.floor(Math.random() * customers.length)],
+					attention: contacts[Math.floor(Math.random() * contacts.length)],
+					date: d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear(),
+					total: "DKK " + (Math.random() * 1000).toFixed(2)
+				});
+			}
+
+			$("#lineTemplate").tmpl(lines)
+				.appendTo("#lines");
+
+			var rowActions = $("<ul id='rowactions'><li><a href='#' class='edit'>Edit</a></li><li><a href='#' class='delete'>Delete</a></li><li><a href='#' class='preview'>Preview</a></li></ul>");
+
+			$("tbody tr").mouseenter(function () {
+				$(this).find(":nth-child(3) > div").append(rowActions);
+			});
+
+			$("tbody tr").mouseleave(function () {
+				rowActions.remove();
+			});
+
+		});
+
+
+		$(document).ready(function () {
+			$("table.tableWithFloatingHeader").stickyTableHeaders();
+		});
+	
+	</script>
+</body>
+</html>
