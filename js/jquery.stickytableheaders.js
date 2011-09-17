@@ -25,7 +25,7 @@
 				clonedHeaderRow.css("position", "fixed");
 				clonedHeaderRow.css("top", "0px");
 				clonedHeaderRow.css("left", $(this).css("margin-left"));
-				clonedHeaderRow.css("visibility", "hidden");
+				clonedHeaderRow.css("display", "none");
 
 				originalHeaderRow.addClass("tableFloatingHeaderOriginal");
 			});
@@ -51,7 +51,7 @@
 					//originalHeaderRow.css("position", "fixed");
 
 					floatingHeaderRow.css("left", (offset.left - scrollLeft) + "px");
-					floatingHeaderRow.css("visibility", "visible");
+					floatingHeaderRow.css("display", "block");
 
 					// Copy cell widths from original header
 					$("th", floatingHeaderRow).each(function (index) {
@@ -63,7 +63,7 @@
 					floatingHeaderRow.css("width", $this.css("width"));
 				}
 				else {
-					floatingHeaderRow.css("visibility", "hidden");
+					floatingHeaderRow.css("display", "none");
 				}
 			});
 		}
