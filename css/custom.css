@@ -14,10 +14,14 @@ body, a
 table
 {
 	width: 100%;
+	border:0;
+	padding:0;
+	margin:0;
 	border-collapse: collapse;
 }
 th
 {
+	padding:0; /* NOTE: th padding must be set explicitly in order to support IE */
 	text-align: left;
 	text-transform: uppercase;
 	line-height: 2em;
@@ -28,7 +32,7 @@ th
 .number
 {
 	text-align: right;
-	padding-right: 10px;
+	padding-right:10px;
 }
 
 tbody td

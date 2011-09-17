@@ -22,45 +22,48 @@
 				var clonedHeaderRow = $("tr:first", this);
 
 				clonedHeaderRow.addClass("tableFloatingHeader");
-				clonedHeaderRow.css("position", "absolute");
+				clonedHeaderRow.css("position", "fixed");
 				clonedHeaderRow.css("top", "0px");
 				clonedHeaderRow.css("left", $(this).css("margin-left"));
 				clonedHeaderRow.css("visibility", "hidden");
 
 				originalHeaderRow.addClass("tableFloatingHeaderOriginal");
 			});
+
 			base.updateTableHeaders();
 			$(window).scroll(base.updateTableHeaders);
 			$(window).resize(base.updateTableHeaders);
 		};
 
-		// Sample Function, Uncomment to use
-		// base.functionName = function(paramaters){
-		// 
-		// };
-
 		base.updateTableHeaders = function () {
 			base.$el.each(function () {
+				$this = $(this);
+
 				var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
 				var floatingHeaderRow = $(".tableFloatingHeader", this);
-				var offset = $(this).offset();
+				var offset = $this.offset();
 				var scrollTop = $(window).scrollTop();
-				if ((scrollTop > offset.top) && (scrollTop < offset.top + $(this).height())) {
+				var scrollLeft = $(window).scrollLeft();
+
+				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
+					// hacking the orig
+					//originalHeaderRow.css("left", (offset.left - scrollLeft) + "px");
+					//originalHeaderRow.css("position", "fixed");
+
+					floatingHeaderRow.css("left", (offset.left - scrollLeft) + "px");
 					floatingHeaderRow.css("visibility", "visible");
-					floatingHeaderRow.css("top", Math.min(scrollTop - offset.top, $(this).height() - floatingHeaderRow.height()) + "px");
 
 					// Copy cell widths from original header
 					$("th", floatingHeaderRow).each(function (index) {
-						var cellWidth = $("th", originalHeaderRow).eq(index).css('width');
+						var cellWidth = $("th", originalHeaderRow).eq(index).width();
 						$(this).css('width', cellWidth);
 					});
 
 					// Copy row width from whole table
-					floatingHeaderRow.css("width", $(this).css("width"));
+					floatingHeaderRow.css("width", $this.css("width"));
 				}
 				else {
 					floatingHeaderRow.css("visibility", "hidden");
-					floatingHeaderRow.css("top", "0px");
 				}
 			});
 		}
