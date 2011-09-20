@@ -1,6 +1,5 @@
 body
 {
-	width: 960px;
 	margin: 0 auto;
 }
 
@@ -94,3 +93,9 @@ tr .customer
 {
 	z-index: 100;
 }
+
+.stock  th { background-color: #FC6E0F; text-transform:none; text-align:center }
+.stock  th,
+.stock  td { text-align:center; padding:5px 20px;} 
+.stock td:first-child,
+.stock th:first-child { text-align:left; font-weight:normal;}
