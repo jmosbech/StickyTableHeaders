@@ -56,7 +56,7 @@
 					});
 
 					// Copy row width from whole table
-					floatingHeaderRow.css("width", $this.css("width"));
+					floatingHeaderRow.css("width", $this.width());
 				}
 				else {
 					floatingHeaderRow.css("display", "none");

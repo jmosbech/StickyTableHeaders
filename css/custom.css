@@ -1,6 +1,7 @@
 body
 {
 	margin: 0 auto;
+	padding:0 20px;
 }
 
 
@@ -12,15 +13,14 @@ body, a
 }
 table
 {
-	width: 100%;
 	border:0;
 	padding:0;
-	margin:0;
+	margin:0 0 20px 0;
 	border-collapse: collapse;
 }
 th
 {
-	padding:0; /* NOTE: th padding must be set explicitly in order to support IE */
+	padding:5px; /* NOTE: th padding must be set explicitly in order to support IE */
 	text-align: left;
 	text-transform: uppercase;
 	line-height: 2em;
@@ -28,7 +28,7 @@ th
 	background-color: #555;
 }
 
-.number
+.amount
 {
 	text-align: right;
 	padding-right:10px;
@@ -36,14 +36,11 @@ th
 
 tbody td
 {
-	padding: 5px 0 20px 0;
+	padding: 5px 5px 20px 5px;
 	line-height: 18px;
 	border-top: 1px solid #E0E0E0;
 }
-td > div
-{
-	position: relative;
-}
+
 tbody tr:nth-child(2n)
 {
 	background-color: #F7F7F7;
@@ -52,50 +49,23 @@ tbody tr:hover
 {
 	background-color: #EEEEEE;
 }
-tr .customer
-{
-	font-weight: bold;
-}
 
-#rowactions
-{
-	padding: 0;
-	margin: 0;
-	position: absolute;
-	bottom: -20px;
-	font-size: 12px;
-}
-#rowactions li
-{
-	display: inline-block;
-	margin-right: 15px;
-}
-#rowactions li a
-{
-	color: #78A4CE;
-	padding-left: 20px;
-}
-#rowactions .edit
-{
-	background: url('silk/icons/pencil.png') 0 0 no-repeat;
-}
-#rowactions .delete
-{
-	background: url('silk/icons/cross.png') 0 0 no-repeat;
-}
-#rowactions .preview
-{
-	background: url('silk/icons/page.png') 0 0 no-repeat;
-}
-
-
-.tableWithFloatingHeader thead tr
-{
-	z-index: 100;
-}
-
-.stock  th { background-color: #FC6E0F; text-transform:none; text-align:center }
-.stock  th,
-.stock  td { text-align:center; padding:5px 20px;} 
+.stock th { background-color: #FC6E0F; text-transform:none; text-align:center }
+.stock th,
+.stock td { text-align:center; padding:5px 20px;} 
 .stock td:first-child,
 .stock th:first-child { text-align:left; font-weight:normal;}
+
+
+.nasdaq th { text-transform:none; font-weight:bold; text-align:center }
+.nasdaq th,
+.nasdaq td { padding: 6px 5px; font-size: 8pt;} 
+.nasdaq td { text-align:right; } 
+.nasdaq td:first-child,
+.nasdaq th:first-child { text-align:left; }
+
+
+.uci th,
+.uci td {font: 10px verdana;}
+
+.uci th { color: #7D7D7D; background-color: #E5E5E5; text-transform:none; font-weight:bold;}
