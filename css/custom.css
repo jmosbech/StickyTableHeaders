@@ -37,7 +37,8 @@ tbody tr:hover {
 .stock th {
 	background-color: #FC6E0F;
 	text-transform: none;
-	text-align: center
+	text-align: center;
+	padding:10px;
 }
 .stock th, .stock td {
 	text-align: center;

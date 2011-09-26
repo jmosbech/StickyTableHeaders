@@ -54,10 +54,6 @@
 					floatingHeaderRow.css("display", "block");
 
 					base.updateCloneFromOriginal(originalHeaderRow, floatingHeaderRow);
-
-					// Copy row width from whole table
-					floatingHeaderRow.css("width", $this.width());
-					console.log("width: ", $this.width(), $this.css("width"));
 				}
 				else {
 					floatingHeaderRow.css("display", "none");
@@ -65,13 +61,16 @@
 			});
 		}
 
-		// Copy cell widths and classes from original header
 		base.updateCloneFromOriginal = function (originalHeaderRow, floatingHeaderRow) {
+			// Copy cell widths and classes from original header
 			$("th", floatingHeaderRow).each(function (index) {
 				var origCell = $("th", originalHeaderRow).eq(index);
 				$(this).removeClass().addClass(origCell.attr("class"));
 				$(this).css('width', origCell.width());
 			});
+
+			// Copy row width from whole table
+			floatingHeaderRow.css("width", originalHeaderRow.width());
 		}
 
 		// Run initializer

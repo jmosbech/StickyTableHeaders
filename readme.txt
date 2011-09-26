@@ -1,5 +1,9 @@
+== StickyTableHeaders == 
+
 
 to do: 
- - tablesorter support
+ - write readme
  - thead support
- - 
+
+known issues:
+ - IE7 support

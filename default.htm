@@ -4665,43 +4665,16 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" type="text/javascript"></script> 
 
-<script src="http://ajax.microsoft.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js" type="text/javascript"></script> 
-
 <script src="js/jquery.stickytableheaders.js" type="text/javascript"></script> 
 
 <script src="js/jquery.tablesorter.js" type="text/javascript"></script> 
 
-<script id="lineTemplate" type="text/x-jquery-tmpl">
- 
-			<tr>
-				<td>
-					<input type="checkbox" />
-				</td>
-				<td>
-					${number}
-				</td>
-				<td>
-					<div>
-						${customer}<br />
-						Att. ${attention}
-					</div>
-				</td>
-				<td>
-					${date}
-				</td>
-				<td class="amount">
-					${total}
-				</td>
-			</tr>
-</script> 
-
 <script type="text/javascript">
 
 		$(document).ready(function () {
-
-			// important: initialize stickyTableHeaders before tablesorter
+			// initialize stickyTableHeaders before tablesorter
 			$("table").stickyTableHeaders();
-			$(".tablesorter").tablesorter({ sortList: [[0, 0]] });
+			$(".tablesorter").tablesorter();
 		});
 	
 </script>

@@ -1,18 +1,11 @@
-/* tables */
-table.tablesorter
-{
-	margin: 10px 0pt 15px;
-}
-
 table.tablesorter thead tr .header
 {
 	background-image: url(../img/bg.gif);
 	background-repeat: no-repeat;
 	background-position: center right;
-	padding-right:20px;
+	padding-right: 20px;
 	cursor: pointer;
 }
-
 table.tablesorter thead tr .headerSortUp
 {
 	background-image: url(../img/asc.gif);
@@ -23,5 +16,5 @@ table.tablesorter thead tr .headerSortDown
 }
 table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp
 {
-	color:#000;
+	color: #000;
 }
