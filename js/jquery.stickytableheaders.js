@@ -28,6 +28,9 @@
 				clonedHeaderRow.css("display", "none");
 
 				originalHeaderRow.addClass("tableFloatingHeaderOriginal");
+
+				// enabling support for jquery.tablesorter plugin
+				$(this).bind("sortEnd", function (e) { base.updateCloneFromOriginal(originalHeaderRow, clonedHeaderRow); });
 			});
 
 			base.updateTableHeaders();
@@ -46,21 +49,28 @@
 				var scrollLeft = $(window).scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
+					floatingHeaderRow.css("margin-top", 0);
 					floatingHeaderRow.css("left", (offset.left - scrollLeft) + "px");
 					floatingHeaderRow.css("display", "block");
 
-					// Copy cell widths from original header
-					$("th", floatingHeaderRow).each(function (index) {
-						var cellWidth = $("th", originalHeaderRow).eq(index).width();
-						$(this).css('width', cellWidth);
-					});
+					base.updateCloneFromOriginal(originalHeaderRow, floatingHeaderRow);
 
 					// Copy row width from whole table
 					floatingHeaderRow.css("width", $this.width());
+					console.log("width: ", $this.width(), $this.css("width"));
 				}
 				else {
 					floatingHeaderRow.css("display", "none");
 				}
+			});
+		}
+
+		// Copy cell widths and classes from original header
+		base.updateCloneFromOriginal = function (originalHeaderRow, floatingHeaderRow) {
+			$("th", floatingHeaderRow).each(function (index) {
+				var origCell = $("th", originalHeaderRow).eq(index);
+				$(this).removeClass().addClass(origCell.attr("class"));
+				$(this).css('width', origCell.width());
 			});
 		}
 
