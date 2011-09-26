@@ -12,28 +12,7 @@
 		<h1>
 			StickyTableHeaders Demo Page
 		</h1>
-<!--		<table class="tableWithFloatingHeader">
-			<thead>
-				<tr>
-					<th class="checkbox">
-						<input type="checkbox">
-					</th>
-					<th>
-						Number
-					</th>
-					<th>
-						Info
-					</th>
-					<th class="date">
-						Due Date
-					</th>
-					<th class="amount">
-						Total
-					</th>
-				</tr>
-			</thead>
-			<tbody id="lines"></tbody>
-		</table>-->
+
 		<table class="tableWithFloatingHeader stock tablesorter">
 			<thead>
 				<tr>
@@ -4717,30 +4696,6 @@
 </script> 
 
 <script type="text/javascript">
-		$(function () {
-			var i = 100;
-			var customers = ["Apple Computers", "Dell", "Microsoft", "Oracle"];
-			var contacts = ["Steve Jobs", "Bill Gates", "Larry Ellison", "Michael Dell"];
-
-			var lines = []
-
-			var startMillis = new Date(2000, 0, 1).getTime();
-			var endMillis = new Date(2011, 0, 1).getTime();
-			for (var j = 0; j < 20; j++) {
-				var d = new Date(startMillis + Math.random() * (endMillis - startMillis));
-				lines.push({
-					number: i++,
-					customer: customers[Math.floor(Math.random() * customers.length)],
-					attention: contacts[Math.floor(Math.random() * contacts.length)],
-					date: d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear(),
-					total: "DKK " + (Math.random() * 1000).toFixed(2)
-				});
-			}
-
-			$("#lineTemplate").tmpl(lines)
-				.appendTo("#lines");
-		});
-
 
 		$(document).ready(function () {
 
