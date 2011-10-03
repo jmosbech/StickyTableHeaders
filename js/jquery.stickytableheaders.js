@@ -40,15 +40,19 @@
 
 		base.updateTableHeaders = function () {
 			base.$el.each(function () {
-				$this = $(this);
+				var $this = $(this);
+				var $window = $(window);
+
+				var fixedHeaderHeight = isNaN(base.options.fixedOffset) ? base.options.fixedOffset.height() : base.options.fixedOffset;
 
 				var originalHeaderRow = $(".tableFloatingHeaderOriginal", this);
 				var floatingHeaderRow = $(".tableFloatingHeader", this);
 				var offset = $this.offset();
-				var scrollTop = $(window).scrollTop();
-				var scrollLeft = $(window).scrollLeft();
+				var scrollTop = $window.scrollTop() + fixedHeaderHeight;
+				var scrollLeft = $window.scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
+					floatingHeaderRow.css("top", fixedHeaderHeight + "px");
 					floatingHeaderRow.css("margin-top", 0);
 					floatingHeaderRow.css("left", (offset.left - scrollLeft) + "px");
 					floatingHeaderRow.css("display", "block");
@@ -64,9 +68,10 @@
 		base.updateCloneFromOriginal = function (originalHeaderRow, floatingHeaderRow) {
 			// Copy cell widths and classes from original header
 			$("th", floatingHeaderRow).each(function (index) {
+				$this = $(this);
 				var origCell = $("th", originalHeaderRow).eq(index);
-				$(this).removeClass().addClass(origCell.attr("class"));
-				$(this).css('width', origCell.width());
+				$this.removeClass().addClass(origCell.attr("class"));
+				$this.css('width', origCell.width());
 			});
 
 			// Copy row width from whole table
@@ -78,6 +83,7 @@
 	};
 
 	$.StickyTableHeaders.defaultOptions = {
+		fixedOffset: 0
 	};
 
 	$.fn.stickyTableHeaders = function (options) {
