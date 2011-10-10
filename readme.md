@@ -21,9 +21,9 @@ Known Issues
 Browser Support
 ---------------
 The plugin has been verified to work in:
--    Chrome 14
--    Firefox 7
--    Internet Explorer 9
--    Internet Explorer 8
+-   Chrome 14
+-   Firefox 7
+-   Internet Explorer 9
+-   Internet Explorer 8
 
 NOTE: It does not currently work in Internet Explorer 7 (but it degrades nicely)
