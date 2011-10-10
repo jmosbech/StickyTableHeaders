@@ -64,7 +64,7 @@
 					floatingHeaderRow.css('display', 'none');
 				}
 			});
-		}
+		};
 
 		base.updateCloneFromOriginal = function (originalHeaderRow, floatingHeaderRow) {
 			// Copy cell widths and classes from original header
@@ -77,7 +77,7 @@
 
 			// Copy row width from whole table
 			floatingHeaderRow.css('width', originalHeaderRow.width());
-		}
+		};
 
 		// Run initializer
 		base.init();
