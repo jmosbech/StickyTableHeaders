@@ -6,6 +6,7 @@ StickyTableHeaders to the rescue: By applying the StickyTableHeaders jQuery plug
 
 Go ahead and [try out a demo](http://jsfiddle.net/jmosbech/stFcx/).
 
+The code is based on [this proof of concept](http://stackoverflow.com/questions/1030043/html-table-headers-always-visible-at-top-of-window-when-viewing-a-large-table/1041566#1041566).
 
 Future Work
 -----------
