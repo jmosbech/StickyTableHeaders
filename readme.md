@@ -11,7 +11,6 @@ The code is based on [this proof of concept](http://stackoverflow.com/questions/
 Future Work
 -----------
 -   Writing a better readme :)
--   Implementing support for making the entire `<thead>` section sticky
 
 
 Known Issues
