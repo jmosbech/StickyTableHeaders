@@ -26,10 +26,12 @@
 				var clonedHeader = $('thead:first', this);
 
 				clonedHeader.addClass('tableFloatingHeader');
-				clonedHeader.css('position', 'fixed');
-				clonedHeader.css('top', '0px');
-				clonedHeader.css('left', $this.css('margin-left'));
-				clonedHeader.css('display', 'none');
+				clonedHeader.css({
+					'position': 'fixed',
+					'top': 0,
+					'left': $this.css('margin-left'),
+					'display': 'none'
+				});
 
 				originalHeader.addClass('tableFloatingHeaderOriginal');
 
@@ -56,10 +58,12 @@
 				var scrollLeft = $window.scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
-					floatingHeader.css('top', fixedHeaderHeight + 'px');
-					floatingHeader.css('margin-top', 0);
-					floatingHeader.css('left', (offset.left - scrollLeft) + 'px');
-					floatingHeader.css('display', 'block');
+					floatingHeader.css({
+						'top': fixedHeaderHeight,
+						'margin-top': 0,
+						'left': offset.left - scrollLeft,
+						'display': 'block'
+					});
 
 					base.updateCloneFromOriginal(originalHeader, floatingHeader);
 				}
