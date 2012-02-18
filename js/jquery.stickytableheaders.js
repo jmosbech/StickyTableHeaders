@@ -77,7 +77,7 @@
 		base.updateCloneFromOriginal = function (originalHeader, floatingHeader) {
 			// Copy cell widths and classes from original header
 			$('th', floatingHeader).each(function (index) {
-				$this = $(this);
+				var $this = $(this);
 				var origCell = $('th', originalHeader).eq(index);
 				$this.removeClass().addClass(origCell.attr('class'));
 				$this.css('width', origCell.width());
