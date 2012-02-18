@@ -1507,9 +1507,9 @@
 	<script type="text/javascript">
 
 		$(document).ready(function () {
-			// initialize stickyTableHeaders before tablesorter
-			$("table").stickyTableHeaders();
+			// initialize stickyTableHeaders _after_ tablesorter
 			$(".tablesorter").tablesorter();
+			$("table").stickyTableHeaders();
 		});
 	
 	</script>

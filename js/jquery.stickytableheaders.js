@@ -37,6 +37,11 @@
 				originalHeader.before(clonedHeader);
 
 				// enabling support for jquery.tablesorter plugin
+				// forward clicks on clone to original
+				$('th', clonedHeader).click(function(e){
+					var index = $('th', clonedHeader).index(this);
+					$($('th', originalHeader).get(index)).click();
+				});
 				$this.bind('sortEnd', function (e) { base.updateCloneFromOriginal(originalHeader, clonedHeader); });
 			});
 
