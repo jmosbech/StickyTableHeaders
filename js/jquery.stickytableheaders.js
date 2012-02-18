@@ -40,7 +40,7 @@
 				// forward clicks on clone to original
 				$('th', clonedHeader).click(function(e){
 					var index = $('th', clonedHeader).index(this);
-					$($('th', originalHeader).get(index)).click();
+					$('th', originalHeader).eq(index).click();
 				});
 				$this.bind('sortEnd', function (e) { base.updateCloneFromOriginal(originalHeader, clonedHeader); });
 			});
