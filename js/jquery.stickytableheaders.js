@@ -22,8 +22,7 @@
 				$this.wrap('<div class="divTableWithFloatingHeader" style="position:relative"></div>');
 
 				var originalHeader = $('thead:first', this);
-				originalHeader.before(originalHeader.clone());
-				var clonedHeader = $('thead:first', this);
+				var clonedHeader = originalHeader.clone()
 
 				clonedHeader.addClass('tableFloatingHeader');
 				clonedHeader.css({
@@ -34,6 +33,8 @@
 				});
 
 				originalHeader.addClass('tableFloatingHeaderOriginal');
+				
+				originalHeader.before(clonedHeader);
 
 				// enabling support for jquery.tablesorter plugin
 				$this.bind('sortEnd', function (e) { base.updateCloneFromOriginal(originalHeader, clonedHeader); });
