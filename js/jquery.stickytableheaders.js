@@ -11,6 +11,11 @@
 		base.$el = $(el);
 		base.el = el;
 
+		// Cache DOM refs for performance reasons
+		base.$window = $(window);
+		base.$clonedHeader = null;
+		base.$originalHeader = null;
+
 		// Add a reverse reference to the DOM object
 		base.$el.data('StickyTableHeaders', base);
 
@@ -21,75 +26,72 @@
 				var $this = $(this);
 				$this.wrap('<div class="divTableWithFloatingHeader" style="position:relative"></div>');
 
-				var originalHeader = $('thead:first', this);
-				var clonedHeader = originalHeader.clone()
+				base.$originalHeader = $('thead:first', this);
+				base.$clonedHeader = base.$originalHeader.clone();
 
-				clonedHeader.addClass('tableFloatingHeader');
-				clonedHeader.css({
+				base.$clonedHeader.addClass('tableFloatingHeader');
+				base.$clonedHeader.css({
 					'position': 'fixed',
 					'top': 0,
 					'left': $this.css('margin-left'),
 					'display': 'none'
 				});
 
-				originalHeader.addClass('tableFloatingHeaderOriginal');
+				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 				
-				originalHeader.before(clonedHeader);
+				base.$originalHeader.before(base.$clonedHeader);
 
 				// enabling support for jquery.tablesorter plugin
 				// forward clicks on clone to original
-				$('th', clonedHeader).click(function(e){
-					var index = $('th', clonedHeader).index(this);
-					$('th', originalHeader).eq(index).click();
+				$('th', base.$clonedHeader).click(function(e){
+					var index = $('th', base.$clonedHeader).index(this);
+					$('th', base.$originalHeader).eq(index).click();
 				});
-				$this.bind('sortEnd', function (e) { base.updateCloneFromOriginal(originalHeader, clonedHeader); });
+				$this.bind('sortEnd', base.updateCloneFromOriginal );
 			});
 
 			base.updateTableHeaders();
-			$(window).scroll(base.updateTableHeaders);
-			$(window).resize(base.updateTableHeaders);
+			base.$window.scroll(base.updateTableHeaders);
+			base.$window.resize(base.updateTableHeaders);
 		};
 
 		base.updateTableHeaders = function () {
 			base.$el.each(function () {
 				var $this = $(this);
-				var $window = $(window);
 
 				var fixedHeaderHeight = isNaN(base.options.fixedOffset) ? base.options.fixedOffset.height() : base.options.fixedOffset;
 
-				var originalHeader = $('.tableFloatingHeaderOriginal', this);
-				var floatingHeader = $('.tableFloatingHeader', this);
 				var offset = $this.offset();
-				var scrollTop = $window.scrollTop() + fixedHeaderHeight;
-				var scrollLeft = $window.scrollLeft();
+				var scrollTop = base.$window.scrollTop() + fixedHeaderHeight;
+				var scrollLeft = base.$window.scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
-					floatingHeader.css({
+					base.$clonedHeader.css({
 						'top': fixedHeaderHeight,
 						'margin-top': 0,
 						'left': offset.left - scrollLeft,
 						'display': 'block'
 					});
 
-					base.updateCloneFromOriginal(originalHeader, floatingHeader);
+					base.updateCloneFromOriginal();
 				}
 				else {
-					floatingHeader.css('display', 'none');
+					base.$clonedHeader.css('display', 'none');
 				}
 			});
 		};
 
-		base.updateCloneFromOriginal = function (originalHeader, floatingHeader) {
+		base.updateCloneFromOriginal = function () {
 			// Copy cell widths and classes from original header
-			$('th', floatingHeader).each(function (index) {
+			$('th', base.$clonedHeader).each(function (index) {
 				var $this = $(this);
-				var origCell = $('th', originalHeader).eq(index);
+				var origCell = $('th', base.$originalHeader).eq(index);
 				$this.removeClass().addClass(origCell.attr('class'));
 				$this.css('width', origCell.width());
 			});
 
 			// Copy row width from whole table
-			floatingHeader.css('width', originalHeader.width());
+			base.$clonedHeader.css('width', base.$originalHeader.width());
 		};
 
 		// Run initializer
