@@ -24,6 +24,10 @@
 
 			base.$el.each(function () {
 				var $this = $(this);
+
+				// remove padding on <table> to fix issue #7
+				$this.css('padding', 0);
+
 				$this.wrap('<div class="divTableWithFloatingHeader" style="position:relative"></div>');
 
 				base.$originalHeader = $('thead:first', this);
