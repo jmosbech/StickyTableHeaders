@@ -16,7 +16,7 @@ Future Work
 Known Issues
 ------------
 -   You need to set the padding of the `<th>`s explicitly in the css in order to make the plugin work in Internet Explorer
--   There is a brief flicker when you start to scroll
+-   Internet Explorer: Adding horizontal margin to the table causes the header to be misaligned when scrolling. (Issue #10)
 
 
 Browser Support
