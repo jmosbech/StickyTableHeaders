@@ -28,7 +28,7 @@
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
 
-				$this.wrap('<div class="divTableWithFloatingHeader" style="position:relative"></div>');
+				$this.wrap('<div class="divTableWithFloatingHeader"></div>');
 
 				base.$originalHeader = $('thead:first', this);
 				base.$clonedHeader = base.$originalHeader.clone();
