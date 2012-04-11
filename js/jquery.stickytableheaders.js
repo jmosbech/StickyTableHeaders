@@ -43,7 +43,7 @@
 
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 				
-				base.$originalHeader.before(base.$clonedHeader);
+				base.$originalHeader.after(base.$clonedHeader);
 
 				// enabling support for jquery.tablesorter plugin
 				// forward clicks on clone to original
