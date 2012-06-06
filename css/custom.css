@@ -43,7 +43,8 @@ tbody tr:hover
 }
 .stock th
 {
-	background-color: #FC6E0F;
+	background-color: rgb(252, 110, 15);
+	background-color: rgba(252, 110, 15, 0.8);
 	text-transform: none;
 	text-align: center;
 	padding: 10px;

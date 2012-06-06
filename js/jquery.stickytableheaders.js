@@ -76,11 +76,12 @@
 						'left': offset.left - scrollLeft,
 						'display': 'block'
 					});
-
+					base.$originalHeader.css('visibility', 'hidden');
 					base.updateCloneFromOriginal();
 				}
 				else {
 					base.$clonedHeader.css('display', 'none');
+					base.$originalHeader.css('visibility', 'visible');
 				}
 			});
 		};
