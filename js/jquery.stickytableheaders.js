@@ -87,17 +87,34 @@
 		};
 
 		base.updateCloneFromOriginal = function () {
+			var needCompensation = false;
+			$origTh = $('th', base.$originalHeader);
+			
+			if( $origTh.css('border-collapse') == 'collapse') {
+				needCompensation = true;
+			}
+			
 			// Copy cell widths and classes from original header
 			$('th', base.$clonedHeader).each(function (index) {
+				var borderCompensation = 0;
+				if (needCompensation) {
+					if ($(this).next().css("border-left-width") != undefined && $(this).prev().css("border-right-width") != undefined)
+						borderCompensation = Math.floor(
+							parseInt($(this).next().css("border-left-width").match(/^\d+/)) / 2
+							+ parseInt($(this).prev().css("border-right-width").match(/^\d+/)) / 2
+						);
+					else if ($(this).next().css("border-left-width") != undefined)
+						borderCompensation = parseInt($(this).next().css("border-left-width").match(/^\d+/));
+					else if ($(this).prev().css("border-right-width") != undefined)
+						borderCompensation = parseInt($(this).prev().css("border-right-width").match(/^\d+/));
+				}
 				var $this = $(this);
 				var origCell = $('th', base.$originalHeader).eq(index);
 				$this.removeClass().addClass(origCell.attr('class'));
-				$this.css('width', origCell.width());
+				$this.css('width', origCell.width() + borderCompensation);
 			});
-
-			// Copy row width from whole table
 			base.$clonedHeader.css('width', base.$originalHeader.width());
-		};
+	        };
 
 		// Run initializer
 		base.init();
