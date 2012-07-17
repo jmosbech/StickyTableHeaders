@@ -104,9 +104,9 @@
 							+ parseInt($(this).prev().css("border-right-width").match(/^\d+/)) / 2
 						);
 					else if ($(this).next().css("border-left-width") != undefined)
-						borderCompensation = parseInt($(this).next().css("border-left-width").match(/^\d+/));
+						borderCompensation = Math.ceil(parseInt($(this).next().css("border-left-width").match(/^\d+/)) / 2);
 					else if ($(this).prev().css("border-right-width") != undefined)
-						borderCompensation = parseInt($(this).prev().css("border-right-width").match(/^\d+/));
+						borderCompensation = Math.floor(parseInt($(this).prev().css("border-right-width").match(/^\d+/)) / 2);
 				}
 				var $this = $(this);
 				var origCell = $('th', base.$originalHeader).eq(index);
