@@ -37,6 +37,7 @@
 				base.$clonedHeader.css({
 					'position': 'fixed',
 					'top': 0,
+					'z-index':99999
 					'left': $this.css('margin-left'),
 					'display': 'none'
 				});
