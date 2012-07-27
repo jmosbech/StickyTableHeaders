@@ -1,10 +1,15 @@
 /*! Copyright (c) 2011 by Jonas Mosbech - https://github.com/jmosbech/StickyTableHeaders
     MIT license info: https://github.com/jmosbech/StickyTableHeaders/blob/master/license.txt */
 
-(function ($) {
+;(function ($, window, undefined) {
 	'use strict';
 
-	$.StickyTableHeaders = function (el, options) {
+	var pluginName = 'stickyTableHeaders';
+	var defaults = {
+			fixedOffset: 0
+		};
+
+	function Plugin (el, options) {
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
 		var base = this;
@@ -23,7 +28,7 @@
 		base.leftOffset = null;
 
 		base.init = function () {
-			base.options = $.extend({}, $.StickyTableHeaders.defaultOptions, options);
+			base.options = $.extend({}, defaults, options);
 
 			base.$el.each(function () {
 				var $this = $(this);
@@ -114,16 +119,16 @@
 
 		// Run initializer
 		base.init();
-	};
+	}
 
-	$.StickyTableHeaders.defaultOptions = {
-		fixedOffset: 0
-	};
-
-	$.fn.stickyTableHeaders = function (options) {
+	// A really lightweight plugin wrapper around the constructor,
+	// preventing against multiple instantiations
+	$.fn[pluginName] = function ( options ) {
 		return this.each(function () {
-			$.StickyTableHeaders(this, options);
+			if (!$.data(this, 'plugin_' + pluginName)) {
+				$.data(this, 'plugin_' + pluginName, new Plugin( this, options ));
+			}
 		});
 	};
 
-})(jQuery);
+})(jQuery, window);
