@@ -18,8 +18,9 @@
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
 
-		// Add a reverse reference to the DOM object
-		base.$el.data('StickyTableHeaders', base);
+		// Keep track of state
+		base.isCloneVisible = false;
+		base.leftOffset = null;
 
 		base.init = function () {
 			base.options = $.extend({}, $.StickyTableHeaders.defaultOptions, options);
@@ -40,7 +41,6 @@
 					'position': 'fixed',
 					'top': 0,
 					'z-index': 1, // #18: opacity bug
-					'left': $this.css('margin-left'),
 					'display': 'none'
 				});
 
@@ -54,15 +54,18 @@
 					var index = $('th', base.$clonedHeader).index(this);
 					$('th', base.$originalHeader).eq(index).click();
 				});
-				$this.bind('sortEnd', base.updateCloneFromOriginal);
+				$this.bind('sortEnd', base.updateWidth);
 			});
 
-			base.updateTableHeaders();
-			base.$window.scroll(base.updateTableHeaders);
-			base.$window.resize(base.updateTableHeaders);
+			base.updateWidth();
+			base.toggleHeaders();
+
+			base.$window.scroll(base.toggleHeaders);
+			base.$window.resize(base.toggleHeaders);
+			base.$window.resize(base.updateWidth);
 		};
 
-		base.updateTableHeaders = function () {
+		base.toggleHeaders = function () {
 			base.$el.each(function () {
 				var $this = $(this);
 
@@ -73,23 +76,30 @@
 				var scrollLeft = base.$window.scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
+					var newLeft = offset.left - scrollLeft;
+					if(base.isCloneVisible && (newLeft === base.leftOffset)) {
+						return;
+					}
+
 					base.$clonedHeader.css({
 						'top': fixedHeaderHeight,
 						'margin-top': 0,
-						'left': offset.left - scrollLeft,
+						'left': newLeft,
 						'display': 'block'
 					});
 					base.$originalHeader.css('visibility', 'hidden');
-					base.updateCloneFromOriginal();
+					base.isCloneVisible = true;
+					base.leftOffset = newLeft;
 				}
-				else {
+				else if(base.isCloneVisible) {
 					base.$clonedHeader.css('display', 'none');
 					base.$originalHeader.css('visibility', 'visible');
+					base.isCloneVisible = false;
 				}
 			});
 		};
 
-		base.updateCloneFromOriginal = function () {
+		base.updateWidth = function () {
 			// Copy cell widths and classes from original header
 			$('th', base.$clonedHeader).each(function (index) {
 				var $this = $(this);
