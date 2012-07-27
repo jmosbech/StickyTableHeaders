@@ -36,6 +36,7 @@ tbody td
 tbody tr:nth-child(2n)
 {
 	background-color: #F7F7F7;
+	opacity: 0.8;
 }
 tbody tr:hover
 {
