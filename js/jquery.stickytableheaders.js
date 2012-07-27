@@ -26,6 +26,7 @@
 		// Keep track of state
 		base.isCloneVisible = false;
 		base.leftOffset = null;
+		base.topOffset = null;
 
 		base.init = function () {
 			base.options = $.extend({}, defaults, options);
@@ -74,20 +75,21 @@
 			base.$el.each(function () {
 				var $this = $(this);
 
-				var fixedHeaderHeight = isNaN(base.options.fixedOffset) ? base.options.fixedOffset.height() : base.options.fixedOffset;
+				var newTopOffset = isNaN(base.options.fixedOffset) ?
+					base.options.fixedOffset.height() : base.options.fixedOffset;
 
 				var offset = $this.offset();
-				var scrollTop = base.$window.scrollTop() + fixedHeaderHeight;
+				var scrollTop = base.$window.scrollTop() + newTopOffset;
 				var scrollLeft = base.$window.scrollLeft();
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
 					var newLeft = offset.left - scrollLeft;
-					if(base.isCloneVisible && (newLeft === base.leftOffset)) {
+					if (base.isCloneVisible && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
 						return;
 					}
 
 					base.$clonedHeader.css({
-						'top': fixedHeaderHeight,
+						'top': newTopOffset,
 						'margin-top': 0,
 						'left': newLeft,
 						'display': 'block'
@@ -95,8 +97,9 @@
 					base.$originalHeader.css('visibility', 'hidden');
 					base.isCloneVisible = true;
 					base.leftOffset = newLeft;
+					base.topOffset = newTopOffset;
 				}
-				else if(base.isCloneVisible) {
+				else if (base.isCloneVisible) {
 					base.$clonedHeader.css('display', 'none');
 					base.$originalHeader.css('visibility', 'visible');
 					base.isCloneVisible = false;
