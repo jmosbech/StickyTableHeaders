@@ -1,7 +1,9 @@
-/*! Copyright (c) 2011 by Jonas Mosbech - https://github.com/jmosbech/StickyTableHeaders 
+/*! Copyright (c) 2011 by Jonas Mosbech - https://github.com/jmosbech/StickyTableHeaders
     MIT license info: https://github.com/jmosbech/StickyTableHeaders/blob/master/license.txt */
 
 (function ($) {
+	'use strict';
+
 	$.StickyTableHeaders = function (el, options) {
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
@@ -43,16 +45,16 @@
 				});
 
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
-				
+
 				base.$originalHeader.after(base.$clonedHeader);
 
 				// enabling support for jquery.tablesorter plugin
 				// forward clicks on clone to original
-				$('th', base.$clonedHeader).click(function(e){
+				$('th', base.$clonedHeader).click(function (e) {
 					var index = $('th', base.$clonedHeader).index(this);
 					$('th', base.$originalHeader).eq(index).click();
 				});
-				$this.bind('sortEnd', base.updateCloneFromOriginal );
+				$this.bind('sortEnd', base.updateCloneFromOriginal);
 			});
 
 			base.updateTableHeaders();
@@ -110,7 +112,7 @@
 
 	$.fn.stickyTableHeaders = function (options) {
 		return this.each(function () {
-			(new $.StickyTableHeaders(this, options));
+			$.StickyTableHeaders(this, options);
 		});
 	};
 
