@@ -113,7 +113,7 @@
 				var $this = $(this);
 				var $origCell = $('th', base.$originalHeader).eq(index);
 				this.className = $origCell.attr('class') || '';
-				$this.css('width', $origCell.width());
+				$this.css('width', $origCell.outerWidth());
 			});
 
 			// Copy row width from whole table
