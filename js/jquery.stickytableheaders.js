@@ -6,7 +6,8 @@
 
 	var pluginName = 'stickyTableHeaders';
 	var defaults = {
-			fixedOffset: 0
+			fixedOffset: 0,
+			marginTop: 0			
 		};
 
 	function Plugin (el, options) {
@@ -88,7 +89,7 @@
 
 					base.$clonedHeader.css({
 						'top': newTopOffset,
-						'margin-top': 0,
+						'margin-top': base.options.marginTop,
 						'left': newLeft,
 						'display': 'block'
 					});
