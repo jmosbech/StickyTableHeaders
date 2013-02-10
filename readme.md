@@ -20,7 +20,19 @@ $(function() {
 });
 ```
 
-If this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
+####Tear down
+To remove the plugin:
+
+```js
+$('table').stickyTableHeaders('destroy');
+```
+
+####Trigger an update
+```js
+$(window).trigger('resize.stickyTableHeaders');
+```
+
+If any of this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
 
 
 Future Work

@@ -14,8 +14,10 @@
 	<h2>
 		Results - Cycling - Road 2011
 	</h2>
+	<button type="button" class="destroy">Destroy on first table</button>
+	<button type="button" class="apply">Apply on first table</button>
 	<div class="row">
-		<div class="cell s1of2">
+		<div class="cell s1of2 first">
 			<h3>
 				Men Elite Championnats du Monde UCI (DEN/CM)
 			</h3>
@@ -2523,9 +2525,17 @@
 
 		$(document).ready(function () {
 			// passing a fixedOffset param will cause the table header to stick to the bottom of this element
-			$("table").stickyTableHeaders({ fixedOffset: $(".header") });
+			$("table").stickyTableHeaders({ fixedOffset: $('.header') });
+
+			$('.destroy').on('click', function(e){
+				$(".first table").stickyTableHeaders('destroy');
+			});
+
+			$('.apply').on('click', function(e){
+				$('.first table').stickyTableHeaders({fixedOffset: $('.header')});
+			});
 		});
-	
+
 	</script>
 </body>
 </html>
