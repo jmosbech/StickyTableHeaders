@@ -10,6 +10,20 @@
     </style>
   </head>
   <body style="padding:50px">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Bootstrap</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="#">Home</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
     <h1>Twitter Bootstrap Demo</h1>
     <p>Note that in order to make the table header look ok when scrolling we need to add a background color and a bottom border.</p>
     <p>There is also a bug in IE7 that causes the leftmost column to resize when scrolling. Consider using conditional comments (see source) to make sure the plugin is not loaded in this browser.
@@ -65,9 +79,10 @@
         $('tbody tr').clone().appendTo('table');
       }
 
-      $("html:not(.legacy) table").stickyTableHeaders();
+      var offset = $('.navbar').height();
+      $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
     });
-  
+
   </script>
 
   </body>
