@@ -15,12 +15,12 @@ Usage
 3. Initialize the plugin:
 
 ```js
-	$(function() {
-		$('table').stickyTableHeaders();
-	});
+$(function() {
+	$('table').stickyTableHeaders();
+});
 ```
 
-If this is confusing, please check out the [/demo folder](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo). There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
+If this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
 
 
 Future Work
