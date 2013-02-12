@@ -8,6 +8,21 @@ Go ahead and [try out a demo](http://jsfiddle.net/jmosbech/stFcx/).
 
 The code is based on [this proof of concept](http://stackoverflow.com/questions/1030043/html-table-headers-always-visible-at-top-of-window-when-viewing-a-large-table/1041566#1041566).
 
+Usage
+-----
+1. Download the source from [/js/jquery.stickytableheaders.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.js)
+2. Include it in your project
+3. Initialize the plugin:
+
+```js
+	$(function() {
+		$('table').stickyTableHeaders();
+	});
+```
+
+If this is confusing, please check out the [/demo folder](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo). There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
+
+
 Future Work
 -----------
 -   Writing a better readme :)
@@ -26,10 +41,10 @@ Browser Support
 ---------------
 The plugin has been verified to work in:
 
--   Chrome 20
--   Firefox 13
+-   Chrome 24
+-   Firefox 18
 -   Internet Explorer 9
 -   Internet Explorer 8
 -   Safari 5
 
-NOTE: It does not currently work in Internet Explorer 7 (but it degrades nicely)
+NOTE: It does not work in Internet Explorer 7 (but it degrades nicely)
