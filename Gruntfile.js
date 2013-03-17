@@ -31,19 +31,14 @@ module.exports = function(grunt) {
         eqnull: true,
         browser: true,
         globals: {
-          jQuery: true,
-          Backbone: true,
-          _: true,
-          Marionette: true,
-          $: true,
-          slice: true
+          jQuery: true
         }
       },
       js: ['js/<%= meta.source %>']
     }
   });
 
-  // Laoded tasks
+  // Loaded tasks
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 

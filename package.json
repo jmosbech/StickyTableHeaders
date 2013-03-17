@@ -1,7 +1,7 @@
 {
-  "name"          : "jquery-sticky-headers",
-  "description"   : "jQuery sticky headers plugin",
-  "keywords"      : ["jquery", "sticky", "headers"],
+  "name"          : "jquery-sticky-table-headers",
+  "description"   : "jQuery sticky table headers plugin",
+  "keywords"      : ["jquery", "sticky", "table", "headers"],
   "repository"    : "https://github.com/jmosbech/StickyTableHeaders",
   "author"        : "Jonas Mosbech <https://github.com/jmosbech>",
   "version"       : "0.1.0",
