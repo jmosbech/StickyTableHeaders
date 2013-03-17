@@ -1,0 +1,12 @@
+{
+  "name"          : "jquery-sticky-headers",
+  "description"   : "jQuery sticky headers plugin",
+  "keywords"      : ["jquery", "sticky", "headers"],
+  "repository"    : "https://github.com/jmosbech/StickyTableHeaders",
+  "author"        : "Jonas Mosbech <https://github.com/jmosbech>",
+  "version"       : "0.1.0",
+  "devDependencies": {
+    "grunt": "0.4.0",
+    "grunt-contrib-uglify": "~0.2.0"
+  }
+}
