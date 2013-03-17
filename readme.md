@@ -38,8 +38,6 @@ If any of this is confusing, please check out the [/demo](https://github.com/jmo
 Future Work
 -----------
 -   Writing a better readme :)
--   Providing a minified version
-
 
 Known Issues
 ------------
