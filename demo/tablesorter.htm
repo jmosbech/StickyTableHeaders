@@ -9,11 +9,13 @@
 	<h1>
 		Demo: Using StickyTableHeaders with jquery.tablesorter
 	</h1>
-	<table class="tableWithFloatingHeader stock tablesorter">
+	<table class="tableWithFloatingHeader stock tablesorter" style="table-layout: fixed; width: 800px">
 		<thead>
 			<tr>
-				<th>
-					Share Funds
+				<th style="width:50px;">
+					<div style="text-overflow:ellipsis; overflow:hidden; white-space:nowrap">
+						Share Funds
+					</div>
 				</th>
 				<th>
 					2000
@@ -1511,7 +1513,7 @@
 			$(".tablesorter").tablesorter();
 			$("table").stickyTableHeaders();
 		});
-	
+
 	</script>
 </body>
 </html>

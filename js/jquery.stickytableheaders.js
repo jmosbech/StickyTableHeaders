@@ -152,7 +152,11 @@
 				var $this = $(this);
 				var $origCell = $('th', base.$originalHeader).eq(index);
 				this.className = $origCell.attr('class') || '';
-				$this.css('width', $origCell.width());
+				// use min/max-width to fix overflow issue (#30)
+				$this.css({
+					'min-width': $origCell.width(),
+					'max-width': $origCell.width()
+				});
 			});
 
 			// Copy row width from whole table
