@@ -63,6 +63,12 @@
 					$('th', base.$originalHeader).eq(index).click();
 				});
 				$this.on('sortEnd.' + name, base.updateWidth);
+
+				base.$printStyle = $('<style type="text/css" media="print">' +
+					'.tableFloatingHeader{display:none !important;}' +
+					'.tableFloatingHeaderOriginal{visibility:visible !important;}' +
+					'</style>');
+				$('head').append(base.$printStyle);
 			});
 
 			base.updateWidth();
@@ -83,6 +89,7 @@
 			base.$clonedHeader.remove();
 			base.$originalHeader.removeClass('tableFloatingHeaderOriginal');
 			base.$originalHeader.css('visibility', 'visible');
+			base.$printStyle.remove();
 
 			base.el = null;
 			base.$el = null;
