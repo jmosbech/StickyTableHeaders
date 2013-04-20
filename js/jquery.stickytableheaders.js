@@ -121,7 +121,7 @@
 				var scrollTop = base.$window.scrollTop() + newTopOffset;
 				var scrollLeft = base.$window.scrollLeft();
 
-				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height())) {
+				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height() - base.$clonedHeader.height())) {
 					var newLeft = offset.left - scrollLeft;
 					if (base.isCloneVisible && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
 						return;
