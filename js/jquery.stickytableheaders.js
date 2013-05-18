@@ -6,7 +6,9 @@
 
 	var name = 'stickyTableHeaders';
 	var defaults = {
-			fixedOffset: 0
+			fixedOffset: 0,
+			headerSelector: 'thead:first',
+			headerCellTag: 'th'
 		};
 
 	function Plugin (el, options) {
@@ -41,7 +43,7 @@
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
 
-				base.$originalHeader = $('thead:first', this);
+				base.$originalHeader = $(base.options.headerSelector, this);
 				base.$clonedHeader = base.$originalHeader.clone();
 
 				base.$clonedHeader.addClass('tableFloatingHeader');
@@ -58,9 +60,9 @@
 
 				// enabling support for jquery.tablesorter plugin
 				// forward clicks on clone to original
-				$('th', base.$clonedHeader).on('click.' + name, function (e) {
-					var index = $('th', base.$clonedHeader).index(this);
-					$('th', base.$originalHeader).eq(index).click();
+				$(base.options.headerCellTag, base.$clonedHeader).on('click.' + name, function (e) {
+					var index = $(base.options.headerCellTag, base.$clonedHeader).index(this);
+					$(base.options.headerCellTag, base.$originalHeader).eq(index).click();
 				});
 				$this.on('sortEnd.' + name, base.updateWidth);
 
@@ -148,9 +150,9 @@
 
 		base.updateWidth = function () {
 			// Copy cell widths and classes from original header
-			$('th', base.$clonedHeader).each(function (index) {
+			$(base.options.headerCellTag, base.$clonedHeader).each(function (index) {
 				var $this = $(this);
-				var $origCell = $('th', base.$originalHeader).eq(index);
+				var $origCell = $(base.options.headerCellTag, base.$originalHeader).eq(index);
 				this.className = $origCell.attr('class') || '';
 				// use min/max-width to fix overflow issue (#30)
 				$this.css({
