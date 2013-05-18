@@ -130,7 +130,7 @@
 					}
 
 					base.$clonedHeader.css({
-						'top': newTopOffset,
+						'top': 0,
 						'margin-top': 0,
 						'left': newLeft,
 						'display': 'block'
