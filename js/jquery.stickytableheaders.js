@@ -45,28 +45,15 @@
 				base.$clonedHeader = base.$originalHeader.clone();
 
 				base.$clonedHeader.addClass('tableFloatingHeader');
-				base.$clonedHeader.css({
-					'position': 'fixed',
-					'top': 0,
-					'z-index': 1, // #18: opacity bug
-					'display': 'none'
-				});
+				base.$clonedHeader.css('display', 'none');
 
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 
 				base.$originalHeader.after(base.$clonedHeader);
 
-				// enabling support for jquery.tablesorter plugin
-				// forward clicks on clone to original
-				$('th', base.$clonedHeader).on('click.' + name, function (e) {
-					var index = $('th', base.$clonedHeader).index(this);
-					$('th', base.$originalHeader).eq(index).click();
-				});
-				$this.on('sortEnd.' + name, base.updateWidth);
-
 				base.$printStyle = $('<style type="text/css" media="print">' +
 					'.tableFloatingHeader{display:none !important;}' +
-					'.tableFloatingHeaderOriginal{visibility:visible !important;}' +
+					'.tableFloatingHeaderOriginal{position:static !important;}' +
 					'</style>');
 				$('head').append(base.$printStyle);
 			});
@@ -127,20 +114,21 @@
 						return;
 					}
 
-					base.$clonedHeader.css({
+					base.$originalHeader.css({
+						'position': 'fixed',
 						'top': newTopOffset,
 						'margin-top': 0,
 						'left': newLeft,
-						'display': 'block'
+						'z-index': 1
 					});
-					base.$originalHeader.css('visibility', 'hidden');
+					base.$clonedHeader.css('display', '');
 					base.isCloneVisible = true;
 					base.leftOffset = newLeft;
 					base.topOffset = newTopOffset;
 				}
 				else if (base.isCloneVisible) {
+					base.$originalHeader.css('position', 'static');
 					base.$clonedHeader.css('display', 'none');
-					base.$originalHeader.css('visibility', 'visible');
 					base.isCloneVisible = false;
 				}
 			});
@@ -148,19 +136,29 @@
 
 		base.updateWidth = function () {
 			// Copy cell widths and classes from original header
-			$('th', base.$clonedHeader).each(function (index) {
+			var widths = new Array();
+			$('th,td', base.$originalHeader).each(function (index) {
+				// use min/max-width to fix overflow issue (#30)
+				widths[index] = $(this).width();
+			});
+
+			$('th,td', base.$clonedHeader).each(function (index) {
 				var $this = $(this);
-				var $origCell = $('th', base.$originalHeader).eq(index);
+				var $origCell = $('th,td', base.$originalHeader).eq(index);
 				this.className = $origCell.attr('class') || '';
 				// use min/max-width to fix overflow issue (#30)
 				$this.css({
-					'min-width': $origCell.width(),
-					'max-width': $origCell.width()
+					'min-width': widths[index],
+					'max-width': widths[index]
+				});
+				$origCell.css({
+					'min-width': widths[index],
+					'max-width': widths[index]
 				});
 			});
 
 			// Copy row width from whole table
-			base.$clonedHeader.css('width', base.$originalHeader.width());
+			base.$originalHeader.css('width', base.$originalHeader.width());
 		};
 
 		// Run initializer
