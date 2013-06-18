@@ -137,7 +137,7 @@
 		base.updateWidth = function () {
 			// Copy cell widths and classes from original header
 			var widths = new Array();
-			$('th,td', base.$originalHeader).each(function (index) {
+			$('th,td', base.isCloneVisible ? base.$clonedHeader : base.$originalHeader).each(function (index) {
 				// use min/max-width to fix overflow issue (#30)
 				widths[index] = $(this).width();
 			});
