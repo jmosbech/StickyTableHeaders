@@ -125,11 +125,13 @@
 					base.isCloneVisible = true;
 					base.leftOffset = newLeft;
 					base.topOffset = newTopOffset;
+					base.updateWidth();
 				}
 				else if (base.isCloneVisible) {
 					base.$originalHeader.css('position', 'static');
 					base.$clonedHeader.css('display', 'none');
 					base.isCloneVisible = false;
+					base.updateWidth();
 				}
 			});
 		};
@@ -137,28 +139,36 @@
 		base.updateWidth = function () {
 			// Copy cell widths and classes from original header
 			var widths = new Array();
-			$('th,td', base.isCloneVisible ? base.$clonedHeader : base.$originalHeader).each(function (index) {
+			var $staticHeader = base.isCloneVisible ? base.$clonedHeader : base.$originalHeader;
+			$('th,td', $staticHeader).each(function (index) {
 				// use min/max-width to fix overflow issue (#30)
 				widths[index] = $(this).width();
 			});
 
-			$('th,td', base.$clonedHeader).each(function (index) {
-				var $this = $(this);
-				var $origCell = $('th,td', base.$originalHeader).eq(index);
-				this.className = $origCell.attr('class') || '';
-				// use min/max-width to fix overflow issue (#30)
-				$this.css({
-					'min-width': widths[index],
-					'max-width': widths[index]
+			if (base.isCloneVisible) {
+				$('th,td', base.$clonedHeader).each(function (index) {
+					var $this = $(this);
+					var $origCell = $('th,td', base.$originalHeader).eq(index);
+					this.className = $origCell.attr('class') || '';
+					// use min/max-width to fix overflow issue (#30)
+					$origCell.css({
+						'min-width': widths[index],
+						'max-width': widths[index]
+					});
 				});
-				$origCell.css({
-					'min-width': widths[index],
-					'max-width': widths[index]
-				});
-			});
 
-			// Copy row width from whole table
-			base.$originalHeader.css('width', base.$originalHeader.width());
+				// Copy row width from whole table
+				base.$originalHeader.css('width', $staticHeader.width());
+			} else {
+				$('th,td', base.$originalHeader).each(function (index) {
+					// reset min/max-width to allow table to shrink
+					$(this).css({
+						'min-width': '',
+						'max-width': ''
+					});
+				});
+				base.$originalHeader.css('width', '');
+			}
 		};
 
 		// Run initializer
