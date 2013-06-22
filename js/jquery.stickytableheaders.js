@@ -154,6 +154,12 @@
 			base.$originalHeader.css('width', base.$clonedHeader.width());
 		};
 
+		base.updateOptions = function(options) {
+			base.options = $.extend({}, defaults, options);
+			base.updateWidth();
+			base.toggleHeaders();
+		};
+
 		// Run initializer
 		base.init();
 	}
@@ -166,6 +172,8 @@
 			if (instance) {
 				if (typeof options === "string") {
 					instance[options].apply(instance);
+				} else {
+					instance.updateOptions(options);
 				}
 			} else if(options !== 'destroy') {
 				$.data(this, 'plugin_' + name, new Plugin( this, options ));
