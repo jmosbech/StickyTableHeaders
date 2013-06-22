@@ -10,27 +10,41 @@ The code is based on [this proof of concept](http://stackoverflow.com/questions/
 
 Usage
 -----
-1. Download the source from [/js/jquery.stickytableheaders.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.js)
+1. Download the source from [/js/jquery.stickytableheaders.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js)
 2. Include it in your project
 3. Initialize the plugin:
 
 ```js
-$(function() {
-	$('table').stickyTableHeaders();
-});
+$('table').stickyTableHeaders();
 ```
 
-####Tear down
+###Tear down
 To remove the plugin:
 
 ```js
 $('table').stickyTableHeaders('destroy');
 ```
 
-####Trigger an update
+###Trigger an update
 ```js
 $(window).trigger('resize.stickyTableHeaders');
 ```
+
+###Options
+The plugin supports one option, `fixedOffset`, which allows you to specify how much the sticky header should be offset from the top of the page. The `fixedOffset` parameter can either be a number or a jQuery object:
+
+```js
+$('table').stickyTableHeaders({fixedOffset: $('#header')});
+```
+
+As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to re-initialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
+
+```js
+$('table').stickyTableHeaders({fixedOffset: [new-offset]});
+```
+
+Confused?
+---------
 
 If any of this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
 
@@ -51,7 +65,7 @@ Browser Support
 ---------------
 The plugin has been verified to work in:
 
--   Chrome 24
+-   Chrome 27
 -   Firefox 20
 -   Internet Explorer 8-10
 -   Safari 5
