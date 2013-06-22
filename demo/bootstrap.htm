@@ -6,7 +6,6 @@
     <title>Twitter Bootstrap Demo</title>
     <link href="http://twitter.github.com/bootstrap/assets/css/bootstrap.css" rel="stylesheet">
     <style type="text/css">
-      .tableFloatingHeader th { background-color: #fff; border-bottom: 1px solid #DDD;}
       .tableFloatingHeaderOriginal th { background-color: #fff; border-bottom: 1px solid #DDD;}
     </style>
   </head>
@@ -74,15 +73,13 @@
   <script src="../js/jquery.stickytableheaders.js" type="text/javascript"></script>
   <script type="text/javascript">
 
-    $(document).ready(function () {
-      // adding filler rows
-      for(var i = 0; i < 3; i++){
-        $('tbody tr').clone().appendTo('table');
-      }
+    // adding filler rows
+    for(var i = 0; i < 3; i++){
+      $('tbody tr').clone().appendTo('table');
+    }
 
-      var offset = $('.navbar').height();
-      $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
-    });
+    var offset = $('.navbar').height();
+    $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
 
   </script>
 

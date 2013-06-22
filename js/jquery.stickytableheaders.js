@@ -28,7 +28,7 @@
 		base.$originalHeader = null;
 
 		// Keep track of state
-		base.isCloneVisible = false;
+		base.isSticky = false;
 		base.leftOffset = null;
 		base.topOffset = null;
 
@@ -86,7 +86,6 @@
 			base.$window.on('scroll.' + name, base.toggleHeaders);
 			base.$window.on('resize.' + name, base.toggleHeaders);
 			base.$window.on('resize.' + name, base.updateWidth);
-			// TODO: move tablesorter bindings here
 		};
 
 		base.unbind = function(){
@@ -110,7 +109,7 @@
 
 				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height() - base.$clonedHeader.height())) {
 					var newLeft = offset.left - scrollLeft;
-					if (base.isCloneVisible && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
+					if (base.isSticky && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
 						return;
 					}
 
@@ -119,56 +118,40 @@
 						'top': newTopOffset,
 						'margin-top': 0,
 						'left': newLeft,
-						'z-index': 1
+						'z-index': 1 // #18: opacity bug
 					});
 					base.$clonedHeader.css('display', '');
-					base.isCloneVisible = true;
+					base.isSticky = true;
 					base.leftOffset = newLeft;
 					base.topOffset = newTopOffset;
+
+					// make sure the width is correct: the user might have resized the browser while in static mode
 					base.updateWidth();
 				}
-				else if (base.isCloneVisible) {
+				else if (base.isSticky) {
 					base.$originalHeader.css('position', 'static');
 					base.$clonedHeader.css('display', 'none');
-					base.isCloneVisible = false;
-					base.updateWidth();
+					base.isSticky = false;
 				}
 			});
 		};
 
 		base.updateWidth = function () {
-			// Copy cell widths and classes from original header
-			var widths = new Array();
-			var $staticHeader = base.isCloneVisible ? base.$clonedHeader : base.$originalHeader;
-			$('th,td', $staticHeader).each(function (index) {
-				// use min/max-width to fix overflow issue (#30)
-				widths[index] = $(this).width();
+			if (!base.isSticky) {
+				return;
+			}
+			// Copy cell widths from clone
+			var $origHeaders = $('th,td', base.$originalHeader);
+			$('th,td', base.$clonedHeader).each(function (index) {
+				var width = $(this).width();
+				$origHeaders.eq(index).css({
+					'min-width': width,
+					'max-width': width
+				});
 			});
 
-			if (base.isCloneVisible) {
-				$('th,td', base.$clonedHeader).each(function (index) {
-					var $this = $(this);
-					var $origCell = $('th,td', base.$originalHeader).eq(index);
-					this.className = $origCell.attr('class') || '';
-					// use min/max-width to fix overflow issue (#30)
-					$origCell.css({
-						'min-width': widths[index],
-						'max-width': widths[index]
-					});
-				});
-
-				// Copy row width from whole table
-				base.$originalHeader.css('width', $staticHeader.width());
-			} else {
-				$('th,td', base.$originalHeader).each(function (index) {
-					// reset min/max-width to allow table to shrink
-					$(this).css({
-						'min-width': '',
-						'max-width': ''
-					});
-				});
-				base.$originalHeader.css('width', '');
-			}
+			// Copy row width from whole table
+			base.$originalHeader.css('width', base.$clonedHeader.width());
 		};
 
 		// Run initializer
