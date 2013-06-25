@@ -146,7 +146,15 @@
 			// Copy cell widths from clone
 			var $origHeaders = $('th,td', base.$originalHeader);
 			$('th,td', base.$clonedHeader).each(function (index) {
-				var width = $(this).width();
+
+				var width, $this = $(this);
+				
+				if($this.css("box-sizing")=="border-box"){
+					width = $this.outerWidth(); //#39: border-box bug
+				}else{
+					width = $this.width();
+				}
+
 				$origHeaders.eq(index).css({
 					'min-width': width,
 					'max-width': width
