@@ -6,7 +6,8 @@
 
 	var name = 'stickyTableHeaders';
 	var defaults = {
-			fixedOffset: 0
+			fixedOffset: 0,
+			stickyFooter:false
 		};
 
 	function Plugin (el, options) {
@@ -32,6 +33,15 @@
 		base.leftOffset = null;
 		base.topOffset = null;
 
+		/**SticlyFooter**/
+		base.$clonedFooter = null;
+		base.$originalFooter = null;
+
+		// Keep track of footerstate
+		base.isStickyFooter = false;
+		base.leftOffsetFooter = null;
+		base.topOffsetFooter = null;
+
 		base.init = function () {
 			base.options = $.extend({}, defaults, options);
 
@@ -56,6 +66,21 @@
 					'.tableFloatingHeaderOriginal{position:static !important;}' +
 					'</style>');
 				$('head').append(base.$printStyle);
+
+
+				if(base.options.stickyFooter){
+					//If the stickyFooter is activated we clone the footer too
+					base.$originalFooter = $('tfoot:first', this);
+					base.$clonedFooter = base.$originalFooter.clone();
+
+					base.$clonedFooter.addClass('tableFloatingFooter');
+					base.$clonedFooter.css('display', 'none');
+
+					base.$originalFooter.addClass('tableFloatingFooterOriginal');
+
+					base.$originalFooter.after(base.$clonedFooter);
+				}
+
 			});
 
 			base.updateWidth();
@@ -75,8 +100,17 @@
 
 			base.$clonedHeader.remove();
 			base.$originalHeader.removeClass('tableFloatingHeaderOriginal');
+			base.$originalHeader.attr("style","");// Fix if you destroy the stickyHeader when it's sticky
 			base.$originalHeader.css('visibility', 'visible');
 			base.$printStyle.remove();
+
+			if(base.options.stickyFooter){
+				//If the stickyFooter is activated we must remove the clonedFooter too
+				base.$clonedFooter.remove();
+				base.$originalFooter.removeClass('tableFloatingFooterOriginal');
+				base.$originalFooter.attr("style","");
+				base.$originalFooter.css('visibility', 'visible');
+			}
 
 			base.el = null;
 			base.$el = null;
@@ -107,59 +141,111 @@
 				var scrollTop = base.$window.scrollTop() + newTopOffset;
 				var scrollLeft = base.$window.scrollLeft();
 
-				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height() - base.$clonedHeader.height())) {
+				var originalHeaderHeight = base.$originalHeader.height();
+
+				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height() - originalHeaderHeight)) {
 					var newLeft = offset.left - scrollLeft;
 					if (base.isSticky && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
-						return;
+						//return;
+					}else{
+						base.$originalHeader.css({
+							'position': 'fixed',
+							'top': newTopOffset,
+							'margin-top': 0,
+							'left': newLeft,
+							'z-index': 1 // #18: opacity bug
+						});
+						base.$clonedHeader.css('display', '');
+						base.isSticky = true;
+						base.leftOffset = newLeft;
+						base.topOffset = newTopOffset;
+
+						// make sure the width is correct: the user might have resized the browser while in static mode
+						base.updateWidth();
 					}
-
-					base.$originalHeader.css({
-						'position': 'fixed',
-						'top': newTopOffset,
-						'margin-top': 0,
-						'left': newLeft,
-						'z-index': 1 // #18: opacity bug
-					});
-					base.$clonedHeader.css('display', '');
-					base.isSticky = true;
-					base.leftOffset = newLeft;
-					base.topOffset = newTopOffset;
-
-					// make sure the width is correct: the user might have resized the browser while in static mode
-					base.updateWidth();
 				}
 				else if (base.isSticky) {
 					base.$originalHeader.css('position', 'static');
 					base.$clonedHeader.css('display', 'none');
 					base.isSticky = false;
 				}
+
+
+				if(base.options.stickyFooter){
+					//If the stickyFooter is activated we must fixed it too
+					var windowHeight = base.$window.height();
+					var originalFooterHeight = base.$originalFooter.height();
+					var offsetFooter= windowHeight+scrollTop-originalFooterHeight;
+
+					if ((offsetFooter>offset.top) && ((offsetFooter+originalFooterHeight) < offset.top + $this.height())) {
+						if (base.isStickyFooter && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
+							//return;
+						}else{
+
+							base.$originalFooter.css({
+								'position': 'fixed',
+								'bottom': 0,
+								'margin-top': 0,
+								'left': newLeft,
+								'z-index': 1 // #18: opacity bug
+							});
+							
+							base.$clonedFooter.css('visibility', 'visibled');
+							base.$clonedFooter.css('display', '');
+							base.isStickyFooter = true;
+							base.leftOffset = newLeft;
+
+							// make sure the width is correct: the user might have resized the browser while in static mode
+							base.updateWidth();
+						}
+					}
+					else if (base.isStickyFooter) {
+						base.$originalFooter.css('position', 'static');
+						base.$clonedFooter.css('display', 'none');
+						base.isStickyFooter = false;
+						base.$originalFooter.removeClass("fixed");
+					}
+
+					
+				}
+
+
 			});
 		};
 
 		base.updateWidth = function () {
-			if (!base.isSticky) {
+			if (!base.isSticky && !base.isStickyFooter) {
 				return;
 			}
-			// Copy cell widths from clone
-			var $origHeaders = $('th,td', base.$originalHeader);
-			$('th,td', base.$clonedHeader).each(function (index) {
 
-				var width, $this = $(this);
-				
-				if($this.css("box-sizing")=="border-box"){
-					width = $this.outerWidth(); //#39: border-box bug
-				}else{
-					width = $this.width();
-				}
-
-				$origHeaders.eq(index).css({
-					'min-width': width,
-					'max-width': width
+			if(base.isSticky){
+				// Copy cell widths from clone
+				var $origHeaders = $('th,td', base.$originalHeader);
+				$('th,td', base.$clonedHeader).each(function (index) {
+					var width = $(this).width();
+					$origHeaders.eq(index).css({
+						'min-width': width,
+						'max-width': width
+					});
 				});
-			});
 
-			// Copy row width from whole table
-			base.$originalHeader.css('width', base.$clonedHeader.width());
+				// Copy row width from whole table
+				base.$originalHeader.css('width', base.$clonedHeader.width());
+			}
+
+			if(base.options.stickyFooter && base.isStickyFooter){
+				//If the stickyFooter is activated we must copy his width too
+				var $origFooters = $('th,td', base.$originalFooter);
+				$('th,td', base.$clonedFooter).each(function (index) {
+					var width = $(this).width();
+					$origFooters.eq(index).css({
+						'min-width': width,
+						'max-width': width
+					});
+				});
+
+				base.$originalFooter.css('width', base.$originalFooter.width());
+			}
 		};
 
 		base.updateOptions = function(options) {
