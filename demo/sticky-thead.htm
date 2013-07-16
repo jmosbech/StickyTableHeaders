@@ -2,13 +2,13 @@
 <html>
 	<head>
 		<title>
-			Demo: Using StickyTableHeaders on a Table with several rows in &lt;thead&gt; with a sticky footer
+			Demo: Using StickyTableHeaders on a Table with several rows in &lt;thead&gt;
 		</title>
 		<link rel="stylesheet" media="all" href="../css/custom.css" type="text/css">
 	</head>
 	<body>
 		<h1>
-			Demo: Using StickyTableHeaders on a Table with several rows in <code>&lt;thead&gt; with a sticky footer</code>
+			Demo: Using StickyTableHeaders on a Table with several rows in <code>&lt;thead&gt;</code>
 		</h1>
 
 		<table class="tableWithFloatingHeader nasdaq">
@@ -800,37 +800,6 @@
 					</td>
 				</tr>
 			</tbody>
-			<tfoot>
-				<tr>
-					<th style="min-width:200px">
-						Full name
-					</th>
-					<th>
-						CCY
-					</th>
-					<th>
-						Last
-					</th>
-					<th>
-						+/-
-					</th>
-					<th>
-						%
-					</th>
-					<th>
-						Bid
-					</th>
-					<th>
-						Ask
-					</th>
-					<th>
-						Volume
-					</th>
-					<th>
-						Turnover
-					</th>
-				</tr>
-			</tfoot>
 		</table>
 		<div style="height: 4000px">
 			lots of content down here...
@@ -841,7 +810,7 @@
 <script src="../js/jquery.stickytableheaders.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-	$("table").stickyTableHeaders({stickyFooter:true});
+	$("table").stickyTableHeaders();
 </script>
 
 	</body>
