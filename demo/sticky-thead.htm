@@ -800,6 +800,37 @@
 					</td>
 				</tr>
 			</tbody>
+			<tfoot>
+				<tr>
+					<th style="min-width:200px">
+						Full name
+					</th>
+					<th>
+						CCY
+					</th>
+					<th>
+						Last
+					</th>
+					<th>
+						+/-
+					</th>
+					<th>
+						%
+					</th>
+					<th>
+						Bid
+					</th>
+					<th>
+						Ask
+					</th>
+					<th>
+						Volume
+					</th>
+					<th>
+						Turnover
+					</th>
+				</tr>
+			</tfoot>
 		</table>
 		<div style="height: 4000px">
 			lots of content down here...
@@ -810,7 +841,7 @@
 <script src="../js/jquery.stickytableheaders.js" type="text/javascript"></script>
 
 <script type="text/javascript">
-	$("table").stickyTableHeaders();
+	$("table").stickyTableHeaders({stickyFooter:true});
 </script>
 
 	</body>
