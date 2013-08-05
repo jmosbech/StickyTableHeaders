@@ -70,7 +70,9 @@
 		};
 
 		base.teardown = function(){
-			if (base.isSticky) base.$originalHeader.css('position', 'static');
+			if (base.isSticky) {
+				base.$originalHeader.css('position', 'static');
+			}
 			$.removeData(base.el, 'plugin_' + name);
 			base.unbind();
 
