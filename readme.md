@@ -16,7 +16,7 @@ The best way to install is using [Bower](http://bower.io/):
 bower install stickyTableHeaders
 ```
 
-Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js) and add it to your page.
+Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js).
 
 Usage
 -----
@@ -55,11 +55,6 @@ Confused?
 ---------
 
 If any of this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
-
-
-Future Work
------------
--   Writing a better readme :)
 
 Known Issues
 ------------
