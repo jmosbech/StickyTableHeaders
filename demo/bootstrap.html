@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]><html lang="en" class="legacy"><![endif]-->
+<!--[if gte IE 8]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>Fixed Top Navbar Example for Bootstrap</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        min-height: 2000px;
+        padding-top: 70px;
+      }
+      .tableFloatingHeaderOriginal th {
+        background-color: #fff;
+        border-bottom: 1px solid #DDD;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Twitter Bootstrap Demo</a>
+        </div>
+        <div class="navbar-collapse collapse">
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+      <h1>Twitter Bootstrap Demo</h1>
+      <p>Note that in order to make the table header look ok when scrolling we need to add a background color and a bottom border.</p>
+      <p>There is also a bug in IE7 that causes the leftmost column to resize when scrolling. Consider using conditional comments (see source) to make sure the plugin is not loaded in this browser.
+      </p>
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Layout width</th>
+            <th>Column width</th>
+            <th>Gutter width</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Smartphones</td>
+            <td>480px and below</td>
+            <td class="muted" colspan="2">Fluid columns, no fixed widths</td>
+          </tr>
+          <tr>
+            <td>Smartphones to tablets</td>
+            <td>767px and below</td>
+            <td class="muted" colspan="2">Fluid columns, no fixed widths</td>
+          </tr>
+          <tr>
+            <td>Portrait tablets</td>
+            <td>768px and above</td>
+            <td>42px</td>
+            <td>20px</td>
+          </tr>
+          <tr>
+            <td>Default</td>
+            <td>980px and up</td>
+            <td>60px</td>
+            <td>20px</td>
+          </tr>
+          <tr>
+            <td>Large display</td>
+            <td>1200px and up</td>
+            <td>70px</td>
+            <td>30px</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="../js/jquery.stickytableheaders.js"></script>
+
+  <script>
+    // adding filler rows
+    for(var i = 0; i < 3; i++){
+      $('tbody tr').clone().appendTo('table');
+    }
+    var offset = $('.navbar').height();
+    $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset});
+  </script>
+  </body>
+</html>
