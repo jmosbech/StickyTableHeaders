@@ -8,11 +8,19 @@ Go ahead and [try out a demo](http://jsfiddle.net/jmosbech/stFcx/).
 
 The code is based on [this proof of concept](http://stackoverflow.com/questions/1030043/html-table-headers-always-visible-at-top-of-window-when-viewing-a-large-table/1041566#1041566).
 
+Installation
+------------
+The best way to install is using [Bower](http://bower.io/):
+
+```bash
+bower install stickyTableHeaders
+```
+
+Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js) and add it to your page.
+
 Usage
 -----
-1. Download the source from [/js/jquery.stickytableheaders.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js)
-2. Include it in your project
-3. Initialize the plugin:
+Initializing the plugin is pretty straight forward:
 
 ```js
 $('table').stickyTableHeaders();
@@ -25,7 +33,7 @@ To remove the plugin:
 $('table').stickyTableHeaders('destroy');
 ```
 
-###Trigger an update
+###Trigger an update manually
 ```js
 $(window).trigger('resize.stickyTableHeaders');
 ```
