@@ -145,8 +145,17 @@
 			}
 			// Copy cell widths from clone
 			var $origHeaders = $('th,td', base.$originalHeader);
-			$('th,td', base.$clonedHeader).each(function (index) {
+			var $clonedHeaders = $('th,td', base.$clonedHeader);
+			base.cellWidths = [];
+			base.getWidth($clonedHeaders);
+			base.setWidth($clonedHeaders, $origHeaders);
 
+			// Copy row width from whole table
+			base.$originalHeader.css('width', base.$clonedHeader.width());
+		};
+
+		base.getWidth = function ($clonedHeaders) {
+			$clonedHeaders.each(function (index) {
 				var width, $this = $(this);
 
 				if ($this.css('box-sizing') === 'border-box') {
@@ -155,14 +164,18 @@
 					width = $this.width();
 				}
 
+				base.cellWidths[index] = width;
+			});
+		};
+
+		base.setWidth = function ($clonedHeaders, $origHeaders) {
+			$clonedHeaders.each(function (index) {
+				var width = base.cellWidths[index];
 				$origHeaders.eq(index).css({
 					'min-width': width,
 					'max-width': width
 				});
 			});
-
-			// Copy row width from whole table
-			base.$originalHeader.css('width', base.$clonedHeader.width());
 		};
 
 		base.updateOptions = function(options) {
