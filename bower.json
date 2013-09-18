@@ -20,5 +20,8 @@
     "Gruntfile.js",
     "StickyTableHeaders.jquery.json",
     "package.json"
-  ]
+  ],
+  "dependencies": {
+    "jquery": ">= 1.9.0"
+  }
 }
