@@ -1,0 +1,26 @@
+{
+  "name": "StickyTableHeaders",
+  "version": "0.1.4",
+  "homepage": "https://github.com/jmosbech/StickyTableHeaders",
+  "authors": [
+    "Jonas Mosbech <jonas@mosbech.net>"
+  ],
+  "description": "A jQuery plugin that makes large tables more usable by having the table header stick to the top of the screen when scrolling.",
+  "main": "js/jquery.stickytableheaders.js",
+  "keywords": [
+    "jquery",
+    "sticky",
+    "table",
+    "headers"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "css",
+    "demo",
+    "img",
+    "Gruntfile.js",
+    "default.htm"
+  ]
+}
