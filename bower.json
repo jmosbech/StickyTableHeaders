@@ -16,11 +16,9 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules",
-    "css",
     "demo",
-    "img",
     "Gruntfile.js",
-    "default.htm"
+    "StickyTableHeaders.jquery.json",
+    "package.json"
   ]
 }
