@@ -1,12 +1,13 @@
 /*! Copyright (c) 2011 by Jonas Mosbech - https://github.com/jmosbech/StickyTableHeaders
-    MIT license info: https://github.com/jmosbech/StickyTableHeaders/blob/master/license.txt */
+	MIT license info: https://github.com/jmosbech/StickyTableHeaders/blob/master/license.txt */
 
 ;(function ($, window, undefined) {
 	'use strict';
 
 	var name = 'stickyTableHeaders';
 	var defaults = {
-			fixedOffset: 0
+			fixedOffset: 0,
+			scrollableArea: window
 		};
 
 	function Plugin (el, options) {
@@ -23,7 +24,6 @@
 			$.proxy(base.teardown, base));
 
 		// Cache DOM refs for performance reasons
-		base.$window = $(window);
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
 
@@ -40,6 +40,8 @@
 
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
+				
+				base.$scrollableArea = $(base.options.scrollableArea);
 
 				base.$originalHeader = $('thead:first', this);
 				base.$clonedHeader = base.$originalHeader.clone();
@@ -86,31 +88,48 @@
 		};
 
 		base.bind = function(){
-			base.$window.on('scroll.' + name, base.toggleHeaders);
-			base.$window.on('resize.' + name, base.toggleHeaders);
-			base.$window.on('resize.' + name, base.updateWidth);
+			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
+			if (base.$scrollableArea[0] !== window) {
+				$(window).on('scroll.' + name, base.setPositionValues);
+				$(window).on('resize.' + name, base.toggleHeaders);
+			}
+			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
+			base.$scrollableArea.on('resize.' + name, base.updateWidth);
 		};
 
 		base.unbind = function(){
 			// unbind window events by specifying handle so we don't remove too much
-			base.$window.off('.' + name, base.toggleHeaders);
-			base.$window.off('.' + name, base.updateWidth);
+			base.$scrollableArea.off('.' + name, base.toggleHeaders);
+			if (base.$scrollableArea[0] !== window) {
+				$(window).off('scroll.' + name, base.setPositionValues);
+				$(window).off('resize.' + name, base.setPositionValues);
+			}
+			base.$scrollableArea.off('.' + name, base.updateWidth);
 			base.$el.off('.' + name);
 			base.$el.find('*').off('.' + name);
 		};
 
 		base.toggleHeaders = function () {
 			base.$el.each(function () {
-				var $this = $(this);
+				var $this = $(this),
+					newTopOffset = base.$scrollableArea[0] === window ? (
+								isNaN(base.options.fixedOffset) ?
+								base.options.fixedOffset.height() :
+								base.options.fixedOffset
+							) :
+							base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),
+					offset = $this.offset(),
 
-				var newTopOffset = isNaN(base.options.fixedOffset) ?
-					base.options.fixedOffset.height() : base.options.fixedOffset;
+					scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
+					scrollLeft = base.$scrollableArea.scrollLeft(),
 
-				var offset = $this.offset();
-				var scrollTop = base.$window.scrollTop() + newTopOffset;
-				var scrollLeft = base.$window.scrollLeft();
+					scrolled_past_top = base.$scrollableArea[0] === window ?
+							scrollTop > offset.top :
+							newTopOffset > offset.top,
+					not_scrolled_past_bottom = (base.$scrollableArea[0] === window ? scrollTop : 0) <
+							(offset.top + $this.height() - base.$clonedHeader.height() - (base.$scrollableArea[0] === window ? 0 : newTopOffset));
 
-				if ((scrollTop > offset.top) && (scrollTop < offset.top + $this.height() - base.$clonedHeader.height())) {
+				if (scrolled_past_top && not_scrolled_past_bottom) {
 					var newLeft = offset.left - scrollLeft;
 					if (base.isSticky && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
 						return;
@@ -118,15 +137,15 @@
 
 					base.$originalHeader.css({
 						'position': 'fixed',
-						'top': newTopOffset,
 						'margin-top': 0,
 						'left': newLeft,
 						'z-index': 1 // #18: opacity bug
 					});
-					base.$clonedHeader.css('display', '');
 					base.isSticky = true;
 					base.leftOffset = newLeft;
 					base.topOffset = newTopOffset;
+					base.setPositionValues();
+					base.$clonedHeader.css('display', '');
 
 					// make sure the width is correct: the user might have resized the browser while in static mode
 					base.updateWidth();
@@ -136,6 +155,20 @@
 					base.$clonedHeader.css('display', 'none');
 					base.isSticky = false;
 				}
+			});
+		};
+		
+		base.setPositionValues = function () {
+			var win_scroll_top = $(window).scrollTop(),
+				win_scroll_left = $(window).scrollLeft();
+			if (!base.isSticky ||
+					win_scroll_top < 0 || win_scroll_top + $(window).height() > $(document).height() ||
+					win_scroll_left < 0 || win_scroll_left + $(window).width() > $(document).width()) {
+				return;
+			}
+			base.$originalHeader.css({
+				'top': base.topOffset - (base.$scrollableArea[0] === window ? 0 : win_scroll_top),
+				'left': base.leftOffset - (base.$scrollableArea[0] === window ? 0 : win_scroll_left)
 			});
 		};
 
