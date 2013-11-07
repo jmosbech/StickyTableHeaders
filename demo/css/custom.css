@@ -124,6 +124,9 @@ body.fixed_header .header {
 body.scrollable-block .header {
     background: #606;
 }
+body.scrollable-block table {
+    width: 90%;
+}
 .scrollable_area {
     margin: 5em auto 0 auto;
     width: 80%;

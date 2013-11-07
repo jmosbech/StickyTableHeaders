@@ -4,8 +4,9 @@
 ;(function ($, window, undefined) {
 	'use strict';
 
-	var name = 'stickyTableHeaders';
-	var defaults = {
+	var name = 'stickyTableHeaders',
+		id = 0,
+		defaults = {
 			fixedOffset: 0,
 			scrollableArea: window
 		};
@@ -18,6 +19,7 @@
 		// Access to jQuery and DOM versions of element
 		base.$el = $(el);
 		base.el = el;
+		base.id = id++;
 
 		// Listen for destroyed, call teardown
 		base.$el.bind('destroyed',
@@ -29,6 +31,7 @@
 
 		// Keep track of state
 		base.isSticky = false;
+		base.hasBeenSticky = false;
 		base.leftOffset = null;
 		base.topOffset = null;
 
@@ -40,7 +43,7 @@
 
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
-				
+
 				base.$scrollableArea = $(base.options.scrollableArea);
 
 				base.$originalHeader = $('thead:first', this);
@@ -90,8 +93,8 @@
 		base.bind = function(){
 			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
 			if (base.$scrollableArea[0] !== window) {
-				$(window).on('scroll.' + name, base.setPositionValues);
-				$(window).on('resize.' + name, base.toggleHeaders);
+				$(window).on('scroll.' + name + base.id, base.setPositionValues);
+				$(window).on('resize.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
 			base.$scrollableArea.on('resize.' + name, base.updateWidth);
@@ -101,8 +104,8 @@
 			// unbind window events by specifying handle so we don't remove too much
 			base.$scrollableArea.off('.' + name, base.toggleHeaders);
 			if (base.$scrollableArea[0] !== window) {
-				$(window).off('scroll.' + name, base.setPositionValues);
-				$(window).off('resize.' + name, base.setPositionValues);
+				$(window).off('.' + name + base.id, base.setPositionValues);
+				$(window).off('.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.off('.' + name, base.updateWidth);
 			base.$el.off('.' + name);
@@ -131,9 +134,6 @@
 
 				if (scrolled_past_top && not_scrolled_past_bottom) {
 					var newLeft = offset.left - scrollLeft;
-					if (base.isSticky && (newLeft === base.leftOffset) && (newTopOffset === base.topOffset)) {
-						return;
-					}
 
 					base.$originalHeader.css({
 						'position': 'fixed',
@@ -149,15 +149,16 @@
 
 					// make sure the width is correct: the user might have resized the browser while in static mode
 					base.updateWidth();
-				}
-				else if (base.isSticky) {
+				} else if (base.isSticky) {
 					base.$originalHeader.css('position', 'static');
 					base.$clonedHeader.css('display', 'none');
 					base.isSticky = false;
+					base.resetWidth($("td,th", base.$clonedHeader), $("td,th", base.$originalHeader));
 				}
+
 			});
 		};
-		
+
 		base.setPositionValues = function () {
 			var win_scroll_top = $(window).scrollTop(),
 				win_scroll_left = $(window).scrollLeft();
@@ -207,6 +208,16 @@
 				$origHeaders.eq(index).css({
 					'min-width': width,
 					'max-width': width
+				});
+			});
+		};
+
+		base.resetWidth = function ($clonedHeaders, $origHeaders) {
+			$clonedHeaders.each(function (index) {
+				var $this = $(this);
+				$origHeaders.eq(index).css({
+					'min-width': $this.css("min-width"),
+					'max-width': $this.css("max-width")
 				});
 			});
 		};
