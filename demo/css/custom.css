@@ -100,20 +100,41 @@ tbody tr:hover
 }
 
 
-body.fixed_header
+body.fixed_header, body.scrollable-block
 {
 	padding: 60px 20px;
 }
+body.scrollable-block {
+    min-width: 1000px;
+}
 
-body.fixed_header .header
+body.fixed_header .header, body.scrollable-block .header
 {
 	position: fixed;
 	top: 0;
-	background: #080808;
 	color: #FFC234;
 	width: 100%;
 	z-index: 1000;
 	margin: 0 -20px;
 	padding: 0 20px;
 }
-
+body.fixed_header .header {
+	background: #080808;
+}
+body.scrollable-block .header {
+    background: #606;
+}
+body.scrollable-block table {
+    width: 90%;
+}
+.scrollable_area {
+    margin: 5em auto 0 auto;
+    width: 80%;
+    height: 30em;
+    border: 2px solid #FFC234;
+    padding: 0 20px 20px 20px;
+    overflow: auto;
+    -webkit-box-shadow: 2px 2px 10px rgba(50, 50, 50, 0.9);
+    -moz-box-shadow:    2px 2px 10px rgba(50, 50, 50, 0.9);
+    box-shadow:         2px 2px 10px rgba(50, 50, 50, 0.9);
+}
