@@ -41,7 +41,13 @@
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
 
-				base.$originalHeader = $('thead:first', this);
+                // account for <caption> element
+                if ($this.children(':first-child').is("caption")) {
+                    base.$originalHeader = $('caption,thead:first', this);
+                } else {
+                    base.$originalHeader = $('thead:first', this);
+                }
+
 				base.$clonedHeader = base.$originalHeader.clone();
 
 				base.$clonedHeader.addClass('tableFloatingHeader');
@@ -106,6 +112,11 @@
 				var newTopOffset = isNaN(base.options.fixedOffset) ?
 					base.options.fixedOffset.height() : base.options.fixedOffset;
 
+                // account for <caption>
+                if ($this.children(':first-child').is("caption")) {
+                    var captionOffset = newTopOffset + $this.children(':first-child').outerHeight();
+                }
+
 				var offset = $this.offset();
 				var scrollTop = base.$window.scrollTop() + newTopOffset;
 				var scrollLeft = base.$window.scrollLeft();
@@ -123,6 +134,12 @@
 						'left': newLeft,
 						'z-index': 1 // #18: opacity bug
 					});
+
+                    // account for <caption>
+                    $('thead, originalHeader').css({
+                    	'margin-top': captionOffset
+                    });
+
 					base.$clonedHeader.css('display', '');
 					base.isSticky = true;
 					base.leftOffset = newLeft;
