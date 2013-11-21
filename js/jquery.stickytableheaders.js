@@ -137,7 +137,7 @@
 
 					if (scrolled_past_top && not_scrolled_past_bottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
-
+						base.setPositionValues();
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': 0,
@@ -147,7 +147,6 @@
 						base.isSticky = true;
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
-						base.setPositionValues();
 						base.$clonedHeader.css('display', '');
 
 						// make sure the width is correct: the user might have resized the browser while in static mode
