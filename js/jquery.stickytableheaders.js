@@ -129,13 +129,13 @@
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
 
-						scrolled_past_top = base.$scrollableArea[0] === window ?
+						scrolledPastTop = base.$scrollableArea[0] === window ?
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
-						not_scrolled_past_bottom = (base.$scrollableArea[0] === window ? scrollTop : 0) <
+						notScrolledPastBottom = (base.$scrollableArea[0] === window ? scrollTop : 0) <
 								(offset.top + $this.height() - base.$clonedHeader.height() - (base.$scrollableArea[0] === window ? 0 : newTopOffset));
 
-					if (scrolled_past_top && not_scrolled_past_bottom) {
+					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
 						base.setPositionValues();
 						base.$originalHeader.css({
@@ -163,16 +163,16 @@
 		};
 
 		base.setPositionValues = function () {
-			var win_scroll_top = $(window).scrollTop(),
-				win_scroll_left = $(window).scrollLeft();
+			var winScrollTop = $(window).scrollTop(),
+				winScrollLeft = $(window).scrollLeft();
 			if (!base.isSticky ||
-					win_scroll_top < 0 || win_scroll_top + $(window).height() > $(document).height() ||
-					win_scroll_left < 0 || win_scroll_left + $(window).width() > $(document).width()) {
+					winScrollTop < 0 || winScrollTop + $(window).height() > $(document).height() ||
+					winScrollLeft < 0 || winScrollLeft + $(window).width() > $(document).width()) {
 				return;
 			}
 			base.$originalHeader.css({
-				'top': base.topOffset - (base.$scrollableArea[0] === window ? 0 : win_scroll_top),
-				'left': base.leftOffset - (base.$scrollableArea[0] === window ? 0 : win_scroll_left)
+				'top': base.topOffset - (base.$scrollableArea[0] === window ? 0 : winScrollTop),
+				'left': base.leftOffset - (base.$scrollableArea[0] === window ? 0 : winScrollLeft)
 			});
 		};
 
