@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Caption</title>
+	<style type="text/css">
+		body {
+			font-family: arial,sans-serif;
+		}
+		* {
+			box-sizing: border-box;
+		}
+		table {
+			border: 1px solid #444;
+			border-spacing: 0;
+			border-collapse: collapse;
+		}
+		caption {
+			font-size: 22px;
+			padding: 10px;
+			background: #FFF;
+			color: #AE4541;
+			text-align: left;
+		}
+		thead {
+			text-align: left;
+		}
+		th {
+			background: #AE4541;
+		}
+		th, td {
+			border: 1px solid #444;
+			padding: 5px;
+		}
+		td {
+			background: #F4F4F4;
+		}
+	</style>
+</head>
+<body>
+	<h1>Playground</h1>
+	<p>Sandbox for testing and debugging various things. Currently it:</p>
+	<ul>
+		<li>Listens to the <code>cloned.stickyTableHeaders</code> event</li>
+		<li>Demonstrates an issue with IE11 where the width is slightly off if the table has borders and does not have a width.</li>
+		<li>Shows an issue with using the <code>&lt;caption&gt;</code> tag.</li>
+	</ul>
+
+	<table>
+		<caption>Scoville Chile Heat Chart</caption>
+		<thead>
+			<tr>
+				<th>Scoville Heat Units</th>
+				<th>Chilli Pepper / Hot Sauce</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>16,000,000</td>
+				<td>Pure capsaicin and Dihydrocapsaicin</td>
+			</tr>
+			<tr>
+				<td>16,000,000</td>
+				<td>Blair's 16 Million Reserve, from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>16,000,000</td>
+				<td>Blair's 6 A.M., from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>13,500,000</td>
+				<td>Blair's 2005 Halloween Reserve from Gardner Resources Inc.</td>
+			</tr>
+			<tr>
+				<td>9,100,000</td>
+				<td>Nordihydrocapsaicin</td>
+			</tr>
+			<tr>
+				<td>8,600,000</td>
+				<td>Homodihydrocapsaicin and Homocapsaicin</td>
+			</tr>
+			<tr>
+				<td>7,100,000</td>
+				<td>The Source, from Original Juan Specialty Foods</td>
+			</tr>
+			<tr>
+				<td>5,500,000</td>
+				<td>Blair's 5 A.M., from Gardner Resources Inc. - No Longer available</td>
+			</tr>
+			<tr>
+				<td>5,300,000</td>
+				<td>Police grade Pepper spray</td>
+			</tr>
+			<tr>
+				<td>4,000,000</td>
+				<td>Mad Dog 44 Magnum Pepper Extract, from Ashley Food Company, Inc.</td>
+			</tr>
+			<tr>
+				<td>4,000,000</td>
+				<td>Blair's 4 A.M., from Gardner Resources Inc. - No Longer available</td>
+			</tr>
+			<tr>
+				<td>2,000,000</td>
+				<td>Common Pepper spray</td>
+			</tr>
+			<tr>
+				<td>1,500,000 - 2,000,000</td>
+				<td>Blair's 3 A.M., from Gardner Resources Inc.</td>
+			</tr>
+			<tr>
+				<td>1,500,000</td>
+				<td>Da' Bomb The Final Answer, from Original Juan Specialty Food</td>
+			</tr>
+			<tr>
+				<td>1,100,000</td>
+				<td>Blair's Jersey Death from Gardner Resources Inc.</td>
+			</tr>
+			<tr>
+				<td>1,001,304</td>
+				<td>Naga-Bih Jolokia pepper</td>
+			</tr>
+			<tr>
+				<td>1,000,000</td>
+				<td>Cool Million Pepper Extract, from the Poison Pepper Co.</td>
+			</tr>
+			<tr>
+				<td>1,000,000</td>
+				<td>1 Million Scoville Pepper Extract, from Ashley Food Company, Inc.</td>
+			</tr>
+			<tr>
+				<td>923,000</td>
+				<td>The Dorset Naga Pepper, from Peppers by Post</td>
+			</tr>
+			<tr>
+				<td>855,000 (reported) </td>
+				<td>The Naga Jolokia pepper (<i>Capsicum frutescens</i>), not confirmed</td>
+			</tr>
+			<tr>
+				<td>800,000</td>
+				<td>Satan's Blood, from Sauce Crafters Inc.</td>
+			</tr>
+			<tr>
+				<td>700,000</td>
+				<td>The Slap Heard Around the World, from Tiguana Flats</td>
+			</tr>
+			<tr>
+				<td>600,000 - 900,000</td>
+				<td>Blair's 2 A.M., from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>600,000</td>
+				<td>Mad Dog 357 with Bullet Keychain, from Ashley Food Company</td>
+			</tr>
+			<tr>
+				<td>550,000</td>
+				<td>Blair's Mega Death Sauce, from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>500,000 - 750,000</td>
+				<td>Dave's Insanity Private Reserve, from Dave's Gourmet (estimated)</td>
+			</tr>
+			<tr>
+				<td>500,000</td>
+				<td>Pure Cap, from Garden Row Foods</td>
+			</tr>
+			<tr>
+				<td>400,000 - 500,000</td>
+				<td>Spontaneous Combustion Powder, from Southwest Specialty Foods Inc.</td>
+			</tr>
+			<tr>
+				<td>357,000</td>
+				<td>Mad Dog 357 Hot Sauce, from Ashley Food Company</td>
+			</tr>
+			<tr>
+				<td>350,000 - 577,000</td>
+				<td>Red Savina habanero (<i>Capsicum chinense Jacquin</i>)</td>
+			</tr>
+			<tr>
+				<td>350,000</td>
+				<td>Marie Sharp's Belizian Heat, from Marie Sharp's Fine Foods, Ltd.</td>
+			</tr>
+			<tr>
+				<td>283,000</td>
+				<td>Blair's Possible Side Effects, from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>250,000</td>
+				<td>Vicious Viper, from CaJohns Fiery Foods</td>
+			</tr>
+			<tr>
+				<td>250,000</td>
+				<td>Dave's Ultimate Insanity Sauce, from Dave's Gourmet (estimated)</td>
+			</tr>
+			<tr>
+				<td>234,000</td>
+				<td>Da' Bomb Ground Zero, from Original Juan Specialty Foods</td>
+			</tr>
+			<tr>
+				<td>225,000</td>
+				<td>You can't Handle this Hot Sauce, from Peppers</td>
+			</tr>
+			<tr>
+				<td>225,000</td>
+				<td>Not Cool Chocolate Habanero from Bahama Specialty Foods, Inc.</td>
+			</tr>
+			<tr>
+				<td>180,000</td>
+				<td>Dave's Insanity Sauce, from Dave's Gourmet (estimated)</td>
+			</tr>
+			<tr>
+				<td>175,000</td>
+				<td>Predator Great White Shark, from Peppers</td>
+			</tr>
+			<tr>
+				<td>150,000</td>
+				<td>Mad Dog Inferno Reserve, from Ashley Food Company</td>
+			</tr>
+			<tr>
+				<td>125,000</td>
+				<td>Crazy Jerry's Mustard Gas, from Crazy Jerry's, Inc.</td>
+			</tr>
+			<tr>
+				<td>119,700</td>
+				<td>Da' Bomb Beyond Insanity, from Original Juan Specialty Food</td>
+			</tr>
+			<tr>
+				<td>100,000 - 350,000</td>
+				<td>Habanero (<i>Capsicum chinense Jacquin</i>)</td>
+			</tr>
+			<tr>
+				<td>100,000 - 325,000</td>
+				<td>Scotch bonnet (<i>Capsicum chinense</i>)</td>
+			</tr>
+			<tr>
+				<td>100,000 - 225,000</td>
+				<td>Birds Eye pepper</td>
+			</tr>
+			<tr>
+				<td>100,000 - 200,000</td>
+				<td>Jamaican Hot pepper</td>
+			</tr>
+			<tr>
+				<td>100,000 - 125,000</td>
+				<td>Carolina Cayenne pepper</td>
+			</tr>
+			<tr>
+				<td>95,000 - 110,000</td>
+				<td>Bahamian pepper</td>
+			</tr>
+			<tr>
+				<td>90,000</td>
+				<td>Mad Dog Inferno, from Ashley Food Company</td>
+			</tr>
+			<tr>
+				<td>85,000 - 115,000</td>
+				<td>Tabiche pepper</td>
+			</tr>
+			<tr>
+				<td>75,000 - 80,000</td>
+				<td>Red Amazon Pepper</td>
+			</tr>
+			<tr>
+				<td>75,000</td>
+				<td>Chile-Today Red Amazon Powder, from Chile Today-Hot Tamale</td>
+			</tr>
+			<tr>
+				<td>50,000 - 100,000</td>
+				<td>Thai pepper (<i>Capsicum annuum</i>)</td>
+			</tr>
+			<tr>
+				<td>50,000 - 100,000</td>
+				<td>Chiltepin pepper</td>
+			</tr>
+			<tr>
+				<td>49,250</td>
+				<td>Blair's After Death Sauce, from Gardner Resources, Inc.</td>
+			</tr>
+			<tr>
+				<td>40,000 - 58,000</td>
+				<td>Piquin pepper</td>
+			</tr>
+			<tr>
+				<td>40,000 - 50,000</td>
+				<td>Super Chile pepper</td>
+			</tr>
+			<tr>
+				<td>40,000 - 50,000</td>
+				<td>Santaka pepper</td>
+			</tr>
+			<tr>
+				<td>33,390</td>
+				<td>Endorphin Rush Beyond Hot Sauce, from Garden Row Foods</td>
+			</tr>
+			<tr>
+				<td>30,000 - 49,999</td>
+				<td>Lottie's Original Barbados Red Hot, from Lottie's Island Flavours</td>
+			</tr>
+			<tr>
+				<td>30,000 - 50,000</td>
+				<td>Cayenne pepper (<i>Capsicum baccatum</i> and <i>Capsicum frutescens</i>)</td>
+			</tr>
+			<tr>
+				<td>30,000 - 50,000</td>
+				<td>Tabasco pepper (<i>Capsicum frutescens</i>)</td>
+			</tr>
+			<tr>
+				<td>15,000 - 30,000</td>
+				<td>de Arbol pepper</td>
+			</tr>
+			<tr>
+				<td>15,000 - 29,999</td>
+				<td>Lottie's Traditional Barbados Yellow, from Lottie's Island Flavours</td>
+			</tr>
+			<tr>
+				<td>12,000 - 30,000</td>
+				<td>Manzano pepper</td>
+			</tr>
+			<tr>
+				<td>11,600</td>
+				<td>El Yucateco XXXtra Hot Habanero, from El Yucateco Salsas Y Condimentos S.A. de C.V.</td>
+			</tr>
+			<tr>
+				<td>11,000</td>
+				<td>Crazy Jerry's Brain Damage, from Crazy Jerry's, Inc.</td>
+			</tr>
+			<tr>
+				<td>8,910</td>
+				<td>El Yucateco Green Chile Habanero, from El Yucateco Salsas Y Condimentos S.A. de C.V.</td>
+			</tr>
+			<tr>
+				<td>7,000 - 8,000</td>
+				<td>TABASCO® brand Habanero Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>6,000 - 23,000</td>
+				<td>Serrano pepper</td>
+			</tr>
+			<tr>
+				<td>5,790</td>
+				<td>El Yucateco Red Chile Habanero, from El Yucateco Salsas Y Condimentos S.A. de C.V.</td>
+			</tr>
+			<tr>
+				<td>5,000 - 10,000</td>
+				<td>Hot Wax pepper</td>
+			</tr>
+			<tr>
+				<td>5,000 - 10,000</td>
+				<td>Chipotle, a Jalapeño pepper that has been smoked.</td>
+			</tr>
+			<tr>
+				<td>3,600</td>
+				<td>Cholula Hot Sauce, from Casa Cuervo S.A. de C.V.</td>
+			</tr>
+			<tr>
+				<td>3,400</td>
+				<td>El Yucateco Chipotle Hot Sauce, from El Yucateco Salsas Y Condimentos S.A. de C.V.</td>
+			</tr>
+			<tr>
+				<td>2,500 - 8,000</td>
+				<td>Santaka pepper</td>
+			</tr>
+			<tr>
+				<td>2,500 - 5,000</td>
+				<td>Jalapeño (<i>Capsicum annuum</i>)</td>
+			</tr>
+			<tr>
+				<td>2,500 - 5,000</td>
+				<td>Guajilla pepper</td>
+			</tr>
+			<tr>
+				<td>2,500 - 5,000</td>
+				<td>Original TABASCO® brand Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>2.085</td>
+				<td>FRANK'S® REDHOT® XTRA Hot, from Reckitt Benckiser Inc.</td>
+			</tr>
+			<tr>
+				<td>1,500 - 2,500</td>
+				<td>TABASCO® brand Chipotle Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>1,200 - 2,400</td>
+				<td>TABASCO® brand Garlic Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>1,500 - 2,500</td>
+				<td>Rocotilla pepper</td>
+			</tr>
+			<tr>
+				<td>1,000 - 2,000</td>
+				<td>pasilla pepper</td>
+			</tr>
+			<tr>
+				<td>1,000 - 2,000</td>
+				<td>Ancho pepper</td>
+			</tr>
+			<tr>
+				<td>1,000 - 2,000</td>
+				<td>Poblano pepper</td>
+			</tr>
+			<tr>
+				<td>747</td>
+				<td>Texas Pete®, from T.W. Garner Food Co.</td>
+			</tr>
+			<tr>
+				<td>700 - 1,000</td>
+				<td>Coronado pepper</td>
+			</tr>
+			<tr>
+				<td>600 - 1,200</td>
+				<td>TABASCO® brand Green Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>500 - 2,500</td>
+				<td>Anaheim pepper</td>
+			</tr>
+			<tr>
+				<td>500 - 1,000</td>
+				<td>New Mexico pepper</td>
+			</tr>
+			<tr>
+				<td>450</td>
+				<td>FRANK'S® REDHOT® Original, from Reckitt Benckiser Inc.</td>
+			</tr>
+			<tr>
+				<td>400 - 700</td>
+				<td>Santa Fe Grande pepper</td>
+			</tr>
+			<tr>
+				<td>100 - 1000</td>
+				<td>Cubanelle Pepper (<i>Capsicum annuum</i>)</td>
+			</tr>
+			<tr>
+				<td>100 - 600</td>
+				<td>TABASCO® brand SWEET &amp; Spicy Pepper Sauce, from McIlhenny Company</td>
+			</tr>
+			<tr>
+				<td>100 - 500</td>
+				<td>Pepperoncini, pepper (also known as Tuscan peppers, sweet Italian peppers, and golden Greek peppers.</td>
+			</tr>
+			<tr>
+				<td>100 - 500</td>
+				<td>Pimento</td>
+			</tr>
+			<tr>
+				<td>0</td>
+				<td>Sweet Bell pepper</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="../js/jquery.stickytableheaders.js"></script>
+	<script>
+		$('table').on('clonedHeader.stickyTableHeaders', function(table, $clone){
+			console.log('header cloned', $clone);
+		});
+		$('table').stickyTableHeaders();
+	</script>
+</body>
+</html>
