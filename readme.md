@@ -13,7 +13,7 @@ Installation
 The best way to install is using [Bower](http://bower.io/):
 
 ```bash
-bower install stickyTableHeaders
+bower install StickyTableHeaders
 ```
 
 Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js).
