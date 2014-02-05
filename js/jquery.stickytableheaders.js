@@ -9,7 +9,9 @@
 		defaults = {
 			fixedOffset: 0,
 			leftOffset: 0,
-			scrollableArea: window
+			scrollableArea: window,
+			headSelector: 'thead:first',
+			cellSelector: 'th,td'
 		};
 
 	function Plugin (el, options) {
@@ -47,7 +49,7 @@
 
 				base.$scrollableArea = $(base.options.scrollableArea);
 
-				base.$originalHeader = $('thead:first', this);
+				base.$originalHeader = $(base.options.headSelector, this);
 				base.$clonedHeader = base.$originalHeader.clone();
 				$this.trigger('clonedHeader.' + name, [base.$clonedHeader]);
 
@@ -156,7 +158,7 @@
 						base.$originalHeader.css('position', 'static');
 						base.$clonedHeader.css('display', 'none');
 						base.isSticky = false;
-						base.resetWidth($("td,th", base.$clonedHeader), $("td,th", base.$originalHeader));
+						base.resetWidth($(base.options.cellSelector, base.$clonedHeader), $(base.options.cellSelector, base.$originalHeader));
 					}
 
 				});
@@ -182,8 +184,8 @@
 				return;
 			}
 			// Copy cell widths from clone
-			var $origHeaders = $('th,td', base.$originalHeader);
-			var $clonedHeaders = $('th,td', base.$clonedHeader);
+			var $origHeaders = $(base.options.cellSelector, base.$originalHeader);
+			var $clonedHeaders = $(base.options.cellSelector, base.$clonedHeader);
 			base.cellWidths = [];
 			base.getWidth($clonedHeaders);
 			base.setWidth($clonedHeaders, $origHeaders);
