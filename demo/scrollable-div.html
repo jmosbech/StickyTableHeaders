@@ -13,7 +13,7 @@
 			<button type="button" class="apply">Apply on first table</button>
 		</h1>
 	</div>
-    <div class="scrollable_area">
+    <div class="scrollable-area">
         <h2>
             Results - Cycling - Road 2011
         </h2>
@@ -2520,21 +2520,21 @@
         <div style="height: 4000px">
             lots of content down here...
         </div>
-	</div><!-- .scrollable_area -->
+	</div><!-- .scrollable-area -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="../js/jquery.stickytableheaders.js"></script>
 	<script>
 
 		$(document).ready(function () {
 			// passing a fixedOffset param will cause the table header to stick to the bottom of this element
-			$("table").stickyTableHeaders({ scrollableArea: $(".scrollable_area")[0], "fixedOffset": 2 });
+			$("table").stickyTableHeaders({ scrollableArea: $(".scrollable-area")[0], "fixedOffset": 2 });
 
 			$('.destroy').on('click', function(e){
 				$(".first table").stickyTableHeaders('destroy');
 			});
 
 			$('.apply').on('click', function(e){
-				$('.first table').stickyTableHeaders({ scrollableArea: $(".scrollable_area")[0], "fixedOffset": 2 });
+				$('.first table').stickyTableHeaders({ scrollableArea: $(".scrollable-area")[0], "fixedOffset": 2 });
 			});
 		});
 
