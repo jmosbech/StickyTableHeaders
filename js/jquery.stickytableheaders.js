@@ -94,7 +94,7 @@
 
 		base.bind = function(){
 			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
-			if (base.$scrollableArea[0] !== window) {
+			if (!base.isWindowScrolling()) {
 				$(window).on('scroll.' + name + base.id, base.setPositionValues);
 				$(window).on('resize.' + name + base.id, base.toggleHeaders);
 			}
@@ -105,7 +105,7 @@
 		base.unbind = function(){
 			// unbind window events by specifying handle so we don't remove too much
 			base.$scrollableArea.off('.' + name, base.toggleHeaders);
-			if (base.$scrollableArea[0] !== window) {
+			if (!base.isWindowScrolling()) {
 				$(window).off('.' + name + base.id, base.setPositionValues);
 				$(window).off('.' + name + base.id, base.toggleHeaders);
 			}
@@ -119,7 +119,7 @@
 				base.$el.each(function () {
 					var $this = $(this),
 						newLeft,
-						newTopOffset = base.$scrollableArea[0] === window ? (
+						newTopOffset = base.isWindowScrolling() ? (
 									isNaN(base.options.fixedOffset) ?
 									base.options.fixedOffset.height() :
 									base.options.fixedOffset
@@ -130,15 +130,14 @@
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
 
-						scrolledPastTop = base.$scrollableArea[0] === window ?
+						scrolledPastTop = base.isWindowScrolling() ?
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
-						notScrolledPastBottom = (base.$scrollableArea[0] === window ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.$scrollableArea[0] === window ? 0 : newTopOffset));
+						notScrolledPastBottom = (base.isWindowScrolling() ? scrollTop : 0) <
+								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling() ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
-						base.setPositionValues();
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': 0,
@@ -149,7 +148,7 @@
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
-
+						base.setPositionValues();
 						// make sure the width is correct: the user might have resized the browser while in static mode
 						base.updateWidth();
 					} else if (base.isSticky) {
@@ -158,9 +157,12 @@
 						base.isSticky = false;
 						base.resetWidth($("td,th", base.$clonedHeader), $("td,th", base.$originalHeader));
 					}
-
 				});
 			}
+		};
+
+		base.isWindowScrolling = function() {
+			return base.$scrollableArea[0] === window;
 		};
 
 		base.setPositionValues = function () {
@@ -172,8 +174,8 @@
 				return;
 			}
 			base.$originalHeader.css({
-				'top': base.topOffset - (base.$scrollableArea[0] === window ? 0 : winScrollTop),
-				'left': base.leftOffset - (base.$scrollableArea[0] === window ? 0 : winScrollLeft)
+				'top': base.topOffset - (base.isWindowScrolling() ? 0 : winScrollTop),
+				'left': base.leftOffset - (base.isWindowScrolling() ? 0 : winScrollLeft)
 			});
 		};
 
