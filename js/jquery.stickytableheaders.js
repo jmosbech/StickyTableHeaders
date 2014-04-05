@@ -182,17 +182,21 @@
 				return;
 			}
 			// Copy cell widths from clone
-			var $origHeaders = $('th,td', base.$originalHeader);
-			var $clonedHeaders = $('th,td', base.$clonedHeader);
-			base.cellWidths = [];
-			base.getWidth($clonedHeaders);
-			base.setWidth($clonedHeaders, $origHeaders);
+			if (!base.$originalHeaderCells) {
+				base.$originalHeaderCells = $('th,td', base.$originalHeader);
+			}
+			if (!base.$clonedHeaderCells) {
+				base.$clonedHeaderCells = $('th,td', base.$clonedHeader);
+			}
+			var cellWidths = base.getWidth(base.$clonedHeaderCells);
+			base.setWidth(cellWidths, base.$clonedHeaderCells, base.$originalHeaderCells);
 
 			// Copy row width from whole table
 			base.$originalHeader.css('width', base.$clonedHeader.width());
 		};
 
 		base.getWidth = function ($clonedHeaders) {
+			var widths = [];
 			$clonedHeaders.each(function (index) {
 				var width, $this = $(this);
 
@@ -202,13 +206,14 @@
 					width = $this.width();
 				}
 
-				base.cellWidths[index] = width;
+				widths[index] = width;
 			});
+			return widths;
 		};
 
-		base.setWidth = function ($clonedHeaders, $origHeaders) {
+		base.setWidth = function (widths, $clonedHeaders, $origHeaders) {
 			$clonedHeaders.each(function (index) {
-				var width = base.cellWidths[index];
+				var width = widths[index];
 				$origHeaders.eq(index).css({
 					'min-width': width,
 					'max-width': width
