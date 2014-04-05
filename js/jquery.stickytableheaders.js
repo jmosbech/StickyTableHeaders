@@ -121,7 +121,7 @@
 						newLeft,
 						newTopOffset = base.isWindowScrolling() ? (
 									isNaN(base.options.fixedOffset) ?
-									base.options.fixedOffset.height() :
+									base.options.fixedOffset.outerHeight() :
 									base.options.fixedOffset
 								) :
 								base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),

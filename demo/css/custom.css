@@ -102,7 +102,7 @@ tbody tr:hover
 
 body.fixed_header, body.scrollable-block
 {
-	padding: 60px 20px;
+	padding: 70px 20px;
 }
 body.scrollable-block {
     min-width: 1000px;
@@ -117,6 +117,7 @@ body.fixed_header .header, body.scrollable-block .header
 	z-index: 1000;
 	margin: 0 -20px;
 	padding: 0 20px;
+	border-bottom: 10px solid red;
 }
 body.fixed_header .header {
 	background: #080808;
