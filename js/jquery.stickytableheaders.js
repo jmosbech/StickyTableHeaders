@@ -205,7 +205,19 @@
 				if ($this.css('box-sizing') === 'border-box') {
 					width = $this.outerWidth(); // #39: border-box bug
 				} else {
-					width = $this.width();
+				    var $origTh = $('th', base.$originalHeader);
+				    if ($origTh.css('border-collapse') === 'collapse') {
+				        if (document.defaultView && document.defaultView.getComputedStyle) { // standard (includes ie9)
+				            width = parseFloat(document.defaultView.getComputedStyle(this, null).width);
+				        } else {
+				            var leftPadding = parseFloat($this.css("padding-left"));
+				            var rightPadding = parseFloat($this.css("padding-right"));
+				            var border = parseFloat($this.css("border-width"));     //Needs more investigation - this is assuming constant border around this cell and it's neighbours.
+				            width = $this.outerWidth() - leftPadding - rightPadding - border;
+				        }
+				    } else {
+				        width = $this.width();
+				    }
 				}
 
 				widths[index] = width;
