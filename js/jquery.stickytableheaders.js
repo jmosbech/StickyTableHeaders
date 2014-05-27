@@ -208,7 +208,7 @@
 				    var $origTh = $('th', base.$originalHeader);
 				    if ($origTh.css('border-collapse') === 'collapse') {
 				        if (document.defaultView && document.defaultView.getComputedStyle) { // standard (includes ie9)
-				            width = document.defaultView.getComputedStyle(this, null).width();
+				            width = parseFloat(document.defaultView.getComputedStyle(this, null).width);
 				        } else {
 				            var leftPadding = parseFloat($this.css("padding-left"));
 				            var rightPadding = parseFloat($this.css("padding-right"));
