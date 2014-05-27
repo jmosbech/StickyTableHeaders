@@ -60,7 +60,6 @@ Known Issues
 ------------
 -   Internet Explorer: You need to set the padding of the `<th>`s explicitly in the css in order to make the plugin work
 -   Internet Explorer: Adding horizontal margin to the table causes the header to be misaligned when scrolling. (Issue #10)
--   `border-collapse: collapse` is not supported (issue #2)
 -   Using the plugin together with [tablesorter](http://tablesorter.com/docs/) breaks in Internet Explorer 8
 
 
