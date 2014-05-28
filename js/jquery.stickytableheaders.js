@@ -21,6 +21,8 @@
 		base.$el = $(el);
 		base.el = el;
 		base.id = id++;
+		base.$window = $(window);
+		base.$document = $(document);
 
 		// Listen for destroyed, call teardown
 		base.$el.bind('destroyed',
@@ -37,15 +39,11 @@
 		base.topOffset = null;
 
 		base.init = function () {
-			base.options = $.extend({}, defaults, options);
-
 			base.$el.each(function () {
 				var $this = $(this);
 
 				// remove padding on <table> to fix issue #7
 				$this.css('padding', 0);
-
-				base.$scrollableArea = $(base.options.scrollableArea);
 
 				base.$originalHeader = $('thead:first', this);
 				base.$clonedHeader = base.$originalHeader.clone();
@@ -65,9 +63,9 @@
 				$('head').append(base.$printStyle);
 			});
 
+			base.setOptions(options);
 			base.updateWidth();
 			base.toggleHeaders();
-
 			base.bind();
 		};
 
@@ -94,9 +92,9 @@
 
 		base.bind = function(){
 			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
-			if (!base.isWindowScrolling()) {
-				$(window).on('scroll.' + name + base.id, base.setPositionValues);
-				$(window).on('resize.' + name + base.id, base.toggleHeaders);
+			if (!base.isWindowScrolling) {
+				base.$window.on('scroll.' + name + base.id, base.setPositionValues);
+				base.$window.on('resize.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
 			base.$scrollableArea.on('resize.' + name, base.updateWidth);
@@ -105,9 +103,9 @@
 		base.unbind = function(){
 			// unbind window events by specifying handle so we don't remove too much
 			base.$scrollableArea.off('.' + name, base.toggleHeaders);
-			if (!base.isWindowScrolling()) {
-				$(window).off('.' + name + base.id, base.setPositionValues);
-				$(window).off('.' + name + base.id, base.toggleHeaders);
+			if (!base.isWindowScrolling) {
+				base.$window.off('.' + name + base.id, base.setPositionValues);
+				base.$window.off('.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.off('.' + name, base.updateWidth);
 			base.$el.off('.' + name);
@@ -119,7 +117,7 @@
 				base.$el.each(function () {
 					var $this = $(this),
 						newLeft,
-						newTopOffset = base.isWindowScrolling() ? (
+						newTopOffset = base.isWindowScrolling ? (
 									isNaN(base.options.fixedOffset) ?
 									base.options.fixedOffset.outerHeight() :
 									base.options.fixedOffset
@@ -130,11 +128,11 @@
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
 
-						scrolledPastTop = base.isWindowScrolling() ?
+						scrolledPastTop = base.isWindowScrolling ?
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
-						notScrolledPastBottom = (base.isWindowScrolling() ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling() ? 0 : newTopOffset));
+						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
+								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
@@ -144,13 +142,15 @@
 							'left': newLeft,
 							'z-index': 1 // #18: opacity bug
 						});
-						base.isSticky = true;
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
+						if (!base.isSticky) {
+							base.isSticky = true;
+							// make sure the width is correct: the user might have resized the browser while in static mode
+							base.updateWidth();
+						}
 						base.setPositionValues();
-						// make sure the width is correct: the user might have resized the browser while in static mode
-						base.updateWidth();
 					} else if (base.isSticky) {
 						base.$originalHeader.css('position', 'static');
 						base.$clonedHeader.css('display', 'none');
@@ -161,21 +161,17 @@
 			}
 		};
 
-		base.isWindowScrolling = function() {
-			return base.$scrollableArea[0] === window;
-		};
-
 		base.setPositionValues = function () {
-			var winScrollTop = $(window).scrollTop(),
-				winScrollLeft = $(window).scrollLeft();
+			var winScrollTop = base.$window.scrollTop(),
+				winScrollLeft = base.$window.scrollLeft();
 			if (!base.isSticky ||
-					winScrollTop < 0 || winScrollTop + $(window).height() > $(document).height() ||
-					winScrollLeft < 0 || winScrollLeft + $(window).width() > $(document).width()) {
+					winScrollTop < 0 || winScrollTop + base.$window.height() > base.$document.height() ||
+					winScrollLeft < 0 || winScrollLeft + base.$window.width() > base.$document.width()) {
 				return;
 			}
 			base.$originalHeader.css({
-				'top': base.topOffset - (base.isWindowScrolling() ? 0 : winScrollTop),
-				'left': base.leftOffset - (base.isWindowScrolling() ? 0 : winScrollLeft)
+				'top': base.topOffset - (base.isWindowScrolling ? 0 : winScrollTop),
+				'left': base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft)
 			});
 		};
 
@@ -207,10 +203,10 @@
 				} else {
 					var $origTh = $('th', base.$originalHeader);
 					if ($origTh.css('border-collapse') === 'collapse') {
-						// standard (includes ie9)
-						if (document.defaultView && document.defaultView.getComputedStyle) {
-							width = parseFloat(document.defaultView.getComputedStyle(this, null).width);
+						if (window.getComputedStyle) {
+							width = parseFloat(window.getComputedStyle(this, null).width);
 						} else {
+							// ie8 only
 							var leftPadding = parseFloat($this.css("padding-left"));
 							var rightPadding = parseFloat($this.css("padding-right"));
 							// Needs more investigation - this is assuming constant border around this cell and it's neighbours.
@@ -247,8 +243,17 @@
 			});
 		};
 
-		base.updateOptions = function(options) {
+		base.setOptions = function (options) {
 			base.options = $.extend({}, defaults, options);
+			base.$scrollableArea = $(base.options.scrollableArea);
+			base.isWindowScrolling = base.$scrollableArea[0] === window;
+		};
+
+		base.updateOptions = function (options) {
+			base.setOptions(options);
+			// scrollableArea might have changed
+			base.unbind();
+			base.bind();
 			base.updateWidth();
 			base.toggleHeaders();
 		};
