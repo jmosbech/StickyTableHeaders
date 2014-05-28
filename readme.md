@@ -67,9 +67,9 @@ Browser Support
 ---------------
 The plugin has been verified to work in:
 
--   Chrome 27
--   Firefox 20
--   Internet Explorer 8-10
+-   Chrome 35
+-   Firefox 29
+-   Internet Explorer 8-11
 -   Safari 5
 
 NOTE: It does not work in Internet Explorer 7 (but it degrades nicely)
