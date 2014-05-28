@@ -155,7 +155,7 @@
 						base.$originalHeader.css('position', 'static');
 						base.$clonedHeader.css('display', 'none');
 						base.isSticky = false;
-						base.resetWidth($("td,th", base.$clonedHeader), $("td,th", base.$originalHeader));
+						base.resetWidth($('td,th', base.$clonedHeader), $('td,th', base.$originalHeader));
 					}
 				});
 			}
@@ -207,10 +207,10 @@
 							width = parseFloat(window.getComputedStyle(this, null).width);
 						} else {
 							// ie8 only
-							var leftPadding = parseFloat($this.css("padding-left"));
-							var rightPadding = parseFloat($this.css("padding-right"));
+							var leftPadding = parseFloat($this.css('padding-left'));
+							var rightPadding = parseFloat($this.css('padding-right'));
 							// Needs more investigation - this is assuming constant border around this cell and it's neighbours.
-							var border = parseFloat($this.css("border-width"));
+							var border = parseFloat($this.css('border-width'));
 							width = $this.outerWidth() - leftPadding - rightPadding - border;
 						}
 					} else {
@@ -237,8 +237,8 @@
 			$clonedHeaders.each(function (index) {
 				var $this = $(this);
 				$origHeaders.eq(index).css({
-					'min-width': $this.css("min-width"),
-					'max-width': $this.css("max-width")
+					'min-width': $this.css('min-width'),
+					'max-width': $this.css('max-width')
 				});
 			});
 		};
@@ -268,7 +268,7 @@
 		return this.each(function () {
 			var instance = $.data(this, 'plugin_' + name);
 			if (instance) {
-				if (typeof options === "string") {
+				if (typeof options === 'string') {
 					instance[options].apply(instance);
 				} else {
 					instance.updateOptions(options);
