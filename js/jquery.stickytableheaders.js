@@ -132,7 +132,9 @@
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
+								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset)),
+						notScrolledOffPage = (base.isWindowScrolling ? scrollTop : 0) <
+								(offset.top + $this.height() - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
@@ -151,6 +153,25 @@
 							base.updateWidth();
 						}
 						base.setPositionValues();
+					} else if (scrolledPastTop && notScrolledOffPage) {
+					    newLeft = offset.left - scrollLeft + base.options.leftOffset;
+					    var topMargin = offset.top + $this.height() - scrollTop - base.$clonedHeader.height();
+					    base.$originalHeader.css({
+					        'position': 'fixed',
+					        'margin-top': topMargin,
+					        'left': newLeft,
+					        'top': -20,
+					        'z-index': 1 // #18: opacity bug
+					    });
+					    base.leftOffset = newLeft;
+					    base.topOffset = newTopOffset;
+					    base.$clonedHeader.css('display', '');
+					    if (!base.isSticky) {
+					        base.isSticky = true;
+					        // make sure the width is correct: the user might have resized the browser while in static mode
+					        base.updateWidth();
+					    }
+					    base.setPositionValues();
 					} else if (base.isSticky) {
 						base.$originalHeader.css('position', 'static');
 						base.$clonedHeader.css('display', 'none');
