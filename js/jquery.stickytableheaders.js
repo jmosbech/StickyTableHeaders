@@ -9,7 +9,8 @@
 		defaults = {
 			fixedOffset: 0,
 			leftOffset: 0,
-			scrollableArea: window
+			scrollableArea: window,
+			horizontalArea: null
 		};
 
 	function Plugin (el, options) {
@@ -31,6 +32,8 @@
 		// Cache DOM refs for performance reasons
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
+		base.$horizontalArea = null;
+		base.$headerRows = null;
 
 		// Keep track of state
 		base.isSticky = false;
@@ -46,6 +49,7 @@
 				$this.css('padding', 0);
 
 				base.$originalHeader = $('thead:first', this);
+				base.$headerRows = base.$originalHeader.find('tr');
 				base.$clonedHeader = base.$originalHeader.clone();
 				$this.trigger('clonedHeader.' + name, [base.$clonedHeader]);
 
@@ -85,6 +89,16 @@
 			base.$originalHeader.removeClass('tableFloatingHeaderOriginal');
 			base.$originalHeader.css('visibility', 'visible');
 			base.$printStyle.remove();
+
+			if (base.$horizontalArea) {
+				base.$originalHeader.css({
+					'overflow': ''
+				});
+				base.$headerRows.css({
+					'display': '',
+					'position': ''
+				});
+			}
 
 			base.el = null;
 			base.$el = null;
@@ -142,6 +156,16 @@
 							'left': newLeft,
 							'z-index': 1 // #18: opacity bug
 						});
+						if (base.$horizontalArea) {
+							base.$originalHeader.css({
+								'overflow': 'hidden',
+								'width': base.$horizontalArea.width()
+							});
+							base.$headerRows.css({
+								'display': 'block',
+								'position': 'relative'
+							});
+						}
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
@@ -156,6 +180,13 @@
 						base.$clonedHeader.css('display', 'none');
 						base.isSticky = false;
 						base.resetWidth($('td,th', base.$clonedHeader), $('td,th', base.$originalHeader));
+						if (base.$horizontalArea) {
+							base.$headerRows.css({
+								'display': '',
+								'position': ''
+							});
+						}
+
 					}
 				});
 			}
@@ -171,8 +202,13 @@
 			}
 			base.$originalHeader.css({
 				'top': base.topOffset - (base.isWindowScrolling ? 0 : winScrollTop),
-				'left': base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft)
+				'left': base.$horizontalArea ? '' : (base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft))
 			});
+			if (base.$horizontalArea) {
+				base.$headerRows.css({
+					'left': -1 * base.$horizontalArea.scrollLeft()
+				});
+			}
 		};
 
 		base.updateWidth = function () {
@@ -190,7 +226,9 @@
 			base.setWidth(cellWidths, base.$clonedHeaderCells, base.$originalHeaderCells);
 
 			// Copy row width from whole table
-			base.$originalHeader.css('width', base.$clonedHeader.width());
+			if (!base.$horizontalArea) {
+				base.$originalHeader.css('width', base.$clonedHeader.width());
+			}
 		};
 
 		base.getWidth = function ($clonedHeaders) {
@@ -247,6 +285,7 @@
 			base.options = $.extend({}, defaults, options);
 			base.$scrollableArea = $(base.options.scrollableArea);
 			base.isWindowScrolling = base.$scrollableArea[0] === window;
+			base.$horizontalArea = base.options.horizontalArea ? $(base.options.horizontalArea) : null;
 		};
 
 		base.updateOptions = function (options) {
