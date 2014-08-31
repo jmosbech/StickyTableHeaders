@@ -140,7 +140,7 @@
 							'position': 'fixed',
 							'margin-top': 0,
 							'left': newLeft,
-							'z-index': 1 // #18: opacity bug
+							'z-index': 3 // #18: opacity bug
 						});
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
