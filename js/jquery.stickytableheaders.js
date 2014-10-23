@@ -108,8 +108,6 @@
 				base.$window.off('.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.off('.' + name, base.updateWidth);
-			base.$el.off('.' + name);
-			base.$el.find('*').off('.' + name);
 		};
 
 		base.toggleHeaders = function () {
