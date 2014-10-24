@@ -133,7 +133,7 @@ body.scrollable-block table {
 
 .scrollable-area {
 	margin: 5em auto 0 auto;
-	width: 80%;
+	width: 800px;
 	height: 30em;
 	border: 2px solid #FFC234;
 	padding: 0 20px 20px 20px;
