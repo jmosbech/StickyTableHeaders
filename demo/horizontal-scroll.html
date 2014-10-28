@@ -1,0 +1,552 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+   <title>Demo: Using StickyTableHeaders within a scrollable block</title>
+<!--    <link rel="stylesheet" media="all" href="css/oocss.css" type="text/css">
+ -->   <link rel="stylesheet" media="all" href="css/custom.css" type="text/css">
+   <style>
+    .scrollable-area {
+        position: relative;
+        overflow: auto;
+        height: 600px;
+    }
+    .horizontal-scroll {
+      width: 300px;
+      overflow-x: scroll;
+      float: left;
+      margin: 0 50px;
+    }
+    table {
+      width: 500px;
+    }
+   </style>
+</head>
+<body class="scrollable-block-with-horizontal-overflow">
+   <div class="header">
+      <h1>
+         Demo: Using StickyTableHeaders on tables with scrollable horizontal content
+         <button type="button" class="destroy">Destroy on first table</button>
+         <button type="button" class="apply">Apply on first table</button>
+      </h1>
+   </div>
+    <div class="scrollable-area">
+        <h2>
+            Results - Cycling - Road 2011
+        </h2>
+        <div class="horizontal-scroll first">
+            <div class="row">
+                <div class="cell s1of2 first">
+                    <h3>
+                        Men Elite Championnats du Monde UCI (DEN/CM)
+                    </h3>
+                    <p>with <code>horizontalArea</code> option</p>
+                    <table class="uci">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Rank
+                                </th>
+                                <th>
+                                    Name
+                                </th>
+                                <th>
+                                    Nat.
+                                </th>
+                                <th>
+                                    Team
+                                </th>
+                                <th class="age">
+                                    Age
+                                </th>
+                                <th class="result">
+                                    Result
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr valign="top">
+                                <td>
+                                    1
+                                </td>
+                                <td>
+                                    Tony MARTIN
+                                </td>
+                                <td>
+                                    GER
+                                </td>
+                                <td>
+                                    <!--GER-->
+                                    <span title="GERMANY">GER</span>
+                                </td>
+                                <td class="age">
+                                    26
+                                </td>
+                                <td class="result">
+                                    53:43.85
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    2
+                                </td>
+                                <td>
+                                    Bradley WIGGINS
+                                </td>
+                                <td>
+                                    GBR
+                                </td>
+                                <td>
+                                    <!--GBR-->
+                                    <span title="GREAT BRITAIN">GBR</span>
+                                </td>
+                                <td class="age">
+                                    31
+                                </td>
+                                <td class="result">
+                                    +1:15.83
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    3
+                                </td>
+                                <td>
+                                    Fabian CANCELLARA
+                                </td>
+                                <td>
+                                    SUI
+                                </td>
+                                <td>
+                                    <!--SUI-->
+                                    <span title="SWITZERLAND">SUI</span>
+                                </td>
+                                <td class="age">
+                                    30
+                                </td>
+                                <td class="result">
+                                    +1:20.59
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    4
+                                </td>
+                                <td>
+                                    Bert GRABSCH
+                                </td>
+                                <td>
+                                    GER
+                                </td>
+                                <td>
+                                    <!--GER-->
+                                    <span title="GERMANY">GER</span>
+                                </td>
+                                <td class="age">
+                                    36
+                                </td>
+                                <td class="result">
+                                    +1:31.76
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    5
+                                </td>
+                                <td>
+                                    Jack BOBRIDGE
+                                </td>
+                                <td>
+                                    AUS
+                                </td>
+                                <td>
+                                    <!--AUS-->
+                                    <span title="AUSTRALIA">AUS</span>
+                                </td>
+                                <td class="age">
+                                    22
+                                </td>
+                                <td class="result">
+                                    +2:13.86
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    6
+                                </td>
+                                <td>
+                                    Richie PORTE
+                                </td>
+                                <td>
+                                    AUS
+                                </td>
+                                <td>
+                                    <!--AUS-->
+                                    <span title="AUSTRALIA">AUS</span>
+                                </td>
+                                <td class="age">
+                                    26
+                                </td>
+                                <td class="result">
+                                    +2:29.54
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    7
+                                </td>
+                                <td>
+                                    David MILLAR
+                                </td>
+                                <td>
+                                    GBR
+                                </td>
+                                <td>
+                                    <!--GBR-->
+                                    <span title="GREAT BRITAIN">GBR</span>
+                                </td>
+                                <td class="age">
+                                    34
+                                </td>
+                                <td class="result">
+                                    +2:45.62
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    8
+                                </td>
+                                <td>
+                                    Lieuwe WESTRA
+                                </td>
+                                <td>
+                                    NED
+                                </td>
+                                <td>
+                                    <!--NED-->
+                                    <span title="NETHERLANDS">NED</span>
+                                </td>
+                                <td class="age">
+                                    29
+                                </td>
+                                <td class="result">
+                                    +3:18.52
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    9
+                                </td>
+                                <td>
+                                    Alexsandr DYACHENKO
+                                </td>
+                                <td>
+                                    KAZ
+                                </td>
+                                <td>
+                                    <!--KAZ-->
+                                    <span title="KAZAKHSTAN">KAZ</span>
+                                </td>
+                                <td class="age">
+                                    28
+                                </td>
+                                <td class="result">
+                                    +3:19.76
+                                </td>
+                            </tr>
+                            <tr valign="top">
+                                <td>
+                                    10
+                                </td>
+                                <td>
+                                    Jakob FUGLSANG
+                                </td>
+                                <td>
+                                    DEN
+                                </td>
+                                <td>
+                                    <!--DEN-->
+                                    <span title="DENMARK">DEN</span>
+                                </td>
+                                <td class="age">
+                                    26
+                                </td>
+                                <td class="result">
+                                    +3:30.59
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="horizontal-scroll last">
+            <div class="cell s1of2 lastCell">
+                <h3>
+                    Women Elite Championnats du Monde UCI (DEN/CM)
+                </h3>
+                <p><strong>without</strong> <code>horizontalArea</code> option</p>
+                <table class="uci">
+                    <thead>
+                        <tr>
+                            <th>
+                                Rank
+                            </th>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Nat.
+                            </th>
+                            <th>
+                                Team
+                            </th>
+                            <th class="age">
+                                Age
+                            </th>
+                            <th class="result">
+                                Result
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr valign="top">
+                            <td>
+                                1
+                            </td>
+                            <td>
+                                Judith ARNDT
+                            </td>
+                            <td>
+                                GER
+                            </td>
+                            <td>
+                                <!--GER-->
+                                <span title="GERMANY">GER</span>
+                            </td>
+                            <td class="age">
+                                35
+                            </td>
+                            <td class="result">
+                                37:07.38
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                2
+                            </td>
+                            <td>
+                                Linda Melanie VILLUMSEN
+                            </td>
+                            <td>
+                                NZL
+                            </td>
+                            <td>
+                                <!--NZL-->
+                                <span title="NEW ZEALAND">NZL</span>
+                            </td>
+                            <td class="age">
+                                26
+                            </td>
+                            <td class="result">
+                                +21.73
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                3
+                            </td>
+                            <td>
+                                Emma POOLEY
+                            </td>
+                            <td>
+                                GBR
+                            </td>
+                            <td>
+                                <!--GBR-->
+                                <span title="GREAT BRITAIN">GBR</span>
+                            </td>
+                            <td class="age">
+                                29
+                            </td>
+                            <td class="result">
+                                +24.13
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                4
+                            </td>
+                            <td>
+                                Tara WHITTEN
+                            </td>
+                            <td>
+                                CAN
+                            </td>
+                            <td>
+                                <!--CAN-->
+                                <span title="CANADA">CAN</span>
+                            </td>
+                            <td class="age">
+                                31
+                            </td>
+                            <td class="result">
+                                +26.16
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                5
+                            </td>
+                            <td>
+                                Clara HUGHES
+                            </td>
+                            <td>
+                                CAN
+                            </td>
+                            <td>
+                                <!--CAN-->
+                                <span title="CANADA">CAN</span>
+                            </td>
+                            <td class="age">
+                                39
+                            </td>
+                            <td class="result">
+                                +36.79
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                6
+                            </td>
+                            <td>
+                                Eleonora VAN DIJK
+                            </td>
+                            <td>
+                                NED
+                            </td>
+                            <td>
+                                <!--NED-->
+                                <span title="NETHERLANDS">NED</span>
+                            </td>
+                            <td class="age">
+                                24
+                            </td>
+                            <td class="result">
+                                +38.88
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                7
+                            </td>
+                            <td>
+                                Rhae-Christie SHAW
+                            </td>
+                            <td>
+                                CAN
+                            </td>
+                            <td>
+                                <!--CAN-->
+                                <span title="CANADA">CAN</span>
+                            </td>
+                            <td class="age">
+                                36
+                            </td>
+                            <td class="result">
+                                +39.23
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                8
+                            </td>
+                            <td>
+                                Amber NEBEN
+                            </td>
+                            <td>
+                                USA
+                            </td>
+                            <td>
+                                <!--USA-->
+                                <span title="UNITED STATES">USA</span>
+                            </td>
+                            <td class="age">
+                                36
+                            </td>
+                            <td class="result">
+                                +41.09
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                9
+                            </td>
+                            <td>
+                                Emilia FAHLIN
+                            </td>
+                            <td>
+                                SWE
+                            </td>
+                            <td>
+                                <!--SWE-->
+                                <span title="SWEDEN">SWE</span>
+                            </td>
+                            <td class="age">
+                                23
+                            </td>
+                            <td class="result">
+                                +55.06
+                            </td>
+                        </tr>
+                        <tr valign="top">
+                            <td>
+                                10
+                            </td>
+                            <td>
+                                Marianne VOS
+                            </td>
+                            <td>
+                                NED
+                            </td>
+                            <td>
+                                <!--NED-->
+                                <span title="NETHERLANDS">NED</span>
+                            </td>
+                            <td class="age">
+                                24
+                            </td>
+                            <td class="result">
+                                +55.77
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div style="height: 4000px; clear: left">
+            lots of content down here...
+        </div>
+   </div><!-- .scrollable-area -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <script src="../js/jquery.stickytableheaders.js"></script>
+   <script>
+
+      $(document).ready(function () {
+         var stickyOptions = { scrollableArea: $(".scrollable-area")[0], "fixedOffset": 2};
+
+         $('.horizontal-scroll').on('scroll', function(e) {$(".scrollable-area").trigger('resize.stickyTableHeaders');});
+         $(".first table").stickyTableHeaders($.extend({ "horizontalArea": $('.horizontal-scroll.first')[0]}, stickyOptions));
+         $(".last table").stickyTableHeaders(stickyOptions);
+
+         $('.destroy').on('click', function(e){
+            $(".first table").stickyTableHeaders('destroy');
+         });
+
+         $('.apply').on('click', function(e){
+            $('.first table').stickyTableHeaders($.extend({ "horizontalArea": $('.horizontal-scroll.first')[0]}, stickyOptions));
+         });
+      });
+
+   </script>
+</body>
+</html>

@@ -16,7 +16,7 @@ The best way to install is using [Bower](http://bower.io/):
 bower install StickyTableHeaders
 ```
 
-Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](https://raw.github.com/jmosbech/StickyTableHeaders/master/js/jquery.stickytableheaders.min.js).
+Alternatively, you can download the latest version from [jquery.stickytableheaders.min.js](js/jquery.stickytableheaders.min.js).
 
 Usage
 -----
@@ -48,20 +48,30 @@ A number or jQuery object specifying how much the sticky header should be offset
 $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
-####`scrollableArea`
-A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html)
-
-
 As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to re-initialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
 
 ```js
 $('table').stickyTableHeaders({fixedOffset: [new-offset]});
 ```
 
+####`scrollableArea`
+A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](demo/scrollable-div.html)
+
+```js
+$('table').stickyTableHeaders({scrollableArea: $('.container')});
+```
+
+####`horizontalArea`
+A DOM element or jQuery object. Allows you to specify a container which has horizontal scrolling. Ensures that the table header is properly positioned and contained when scrolling horizontally. Optional. [Check this demo for an example](demo/horizontal-scroll.html)
+
+```js
+$('table').stickyTableHeaders({horizontalArea: $('.container-with-overflow-x')});
+```
+
 Confused?
 ---------
 
-If any of this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
+If any of this is confusing, please check out the [/demo](/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
 
 Known Issues
 ------------
