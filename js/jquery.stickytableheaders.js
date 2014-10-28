@@ -130,13 +130,16 @@
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
+								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset)),
+						notScrolledOffPage = (base.isWindowScrolling ? scrollTop : 0) <
+								(offset.top + $this.height() - (base.isWindowScrolling ? 0 : newTopOffset));
 
-					if (scrolledPastTop && notScrolledPastBottom) {
+					if (scrolledPastTop && notScrolledOffPage) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						var topMargin = notScrolledPastBottom ? 0 : offset.top + $this.height() - scrollTop - base.$clonedHeader.height();
 						base.$originalHeader.css({
 							'position': 'fixed',
-							'margin-top': 0,
+							'margin-top': topMargin,
 							'left': newLeft,
 							'z-index': 3 // #18: opacity bug
 						});
