@@ -197,7 +197,7 @@
 				var width, $this = $(this);
 
 				if ($this.css('box-sizing') === 'border-box') {
-					width = $this.outerWidth(); // #39: border-box bug
+					width = $this[0].getBoundingClientRect().width; // #39: border-box bug
 				} else {
 					var $origTh = $('th', base.$originalHeader);
 					if ($origTh.css('border-collapse') === 'collapse') {
