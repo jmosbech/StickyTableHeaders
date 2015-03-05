@@ -9,6 +9,7 @@
 		defaults = {
 			fixedOffset: 0,
 			leftOffset: 0,
+			marginTop: 0,
 			scrollableArea: window
 		};
 
@@ -136,7 +137,7 @@
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
-							'margin-top': 0,
+							'margin-top': base.options.marginTop,
 							'left': newLeft,
 							'z-index': 3 // #18: opacity bug
 						});
