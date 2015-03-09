@@ -198,7 +198,12 @@
 				var width, $this = $(this);
 
 				if ($this.css('box-sizing') === 'border-box') {
-					width = $this[0].getBoundingClientRect().width; // #39: border-box bug
+          var boundingClientRect = $this[0].getBoundingClientRect();
+          if(boundingClientRect.width) {
+            width = boundingClientRect.width; // #39: border-box bug
+          } else {
+            width = boundingClientRect.right - boundingClientRect.left; // ie8 bug: getBoundingClientRect() does not have a width property
+          }
 				} else {
 					var $origTh = $('th', base.$originalHeader);
 					if ($origTh.css('border-collapse') === 'collapse') {
