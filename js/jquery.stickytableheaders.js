@@ -10,7 +10,8 @@
 			fixedOffset: 0,
 			leftOffset: 0,
 			marginTop: 0,
-			scrollableArea: window
+			scrollableArea: window,
+			stickyClass: ''
 		};
 
 	function Plugin (el, options) {
@@ -140,7 +141,7 @@
 							'margin-top': base.options.marginTop,
 							'left': newLeft,
 							'z-index': 3 // #18: opacity bug
-						});
+						}).addClass(base.options.stickyClass);
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
@@ -151,7 +152,7 @@
 						}
 						base.setPositionValues();
 					} else if (base.isSticky) {
-						base.$originalHeader.css('position', 'static');
+						base.$originalHeader.css('position', 'static').removeClass(base.options.stickyClass);
 						base.$clonedHeader.css('display', 'none');
 						base.isSticky = false;
 						base.resetWidth($('td,th', base.$clonedHeader), $('td,th', base.$originalHeader));
