@@ -51,6 +51,13 @@ $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ####`scrollableArea`
 A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html)
 
+####`stickyClass`
+A string that will be added as a CSS class name to the header element when in the fixed position. Defaults to empty string:
+
+```js
+$('table').stickyTableHeaders({stickyClass: 'is-fixed'});
+```
+
 
 As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to re-initialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
 
