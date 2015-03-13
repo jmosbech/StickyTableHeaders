@@ -41,18 +41,18 @@ $(window).trigger('resize.stickyTableHeaders');
 ###Options
 You can initialize the plugin with an options map to tweak the behavior. The following options are supported:
 
-####`fixedOffset`
-A number or jQuery object specifying how much the sticky header should be offset from the top of the page:
-
-```js
-$('table').stickyTableHeaders({fixedOffset: $('#header')});
-```
-
 ####`bottom`
 A DOM element or jQuery object. The sticky header will remain visible until scrolling past the bottom of the specified element instead of the bottom of the table:
 
 ```js
 $('table').stickyTableHeaders({bottom: $('#another-table')});
+```
+
+####`fixedOffset`
+A number or jQuery object specifying how much the sticky header should be offset from the top of the page:
+
+```js
+$('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
 ####`scrollableArea`
