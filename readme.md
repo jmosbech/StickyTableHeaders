@@ -48,6 +48,13 @@ A number or jQuery object specifying how much the sticky header should be offset
 $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
+####`bottom`
+A DOM element or jQuery object. The sticky header will remain visible until scrolling past the bottom of the specified element instead of the bottom of the table:
+
+```js
+$('table').stickyTableHeaders({bottom: $('#another-table')});
+```
+
 ####`scrollableArea`
 A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html)
 

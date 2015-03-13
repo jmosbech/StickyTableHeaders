@@ -115,6 +115,7 @@
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
+						$bottom = $(base.options.bottom) || $this,
 						newLeft,
 						newTopOffset = base.isWindowScrolling ? (
 									isNaN(base.options.fixedOffset) ?
@@ -123,6 +124,7 @@
 								) :
 								base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),
 						offset = $this.offset(),
+						bottomOffset = $bottom.offset(),
 
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
@@ -131,7 +133,7 @@
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
+								(bottomOffset.top + $bottom.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
