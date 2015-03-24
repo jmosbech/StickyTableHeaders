@@ -10,6 +10,9 @@
 			fixedOffset: 0,
 			leftOffset: 0,
 			marginTop: 0,
+			objDocument: document,
+			objHead: 'head',
+			objWindow: window,
 			scrollableArea: window
 		};
 
@@ -22,8 +25,6 @@
 		base.$el = $(el);
 		base.el = el;
 		base.id = id++;
-		base.$window = $(window);
-		base.$document = $(document);
 
 		// Listen for destroyed, call teardown
 		base.$el.bind('destroyed',
@@ -40,6 +41,8 @@
 		base.topOffset = null;
 
 		base.init = function () {
+			base.setOptions(options);
+
 			base.$el.each(function () {
 				var $this = $(this);
 
@@ -61,10 +64,9 @@
 					'.tableFloatingHeader{display:none !important;}' +
 					'.tableFloatingHeaderOriginal{position:static !important;}' +
 					'</style>');
-				$('head').append(base.$printStyle);
+				base.$head.append(base.$printStyle);
 			});
 
-			base.setOptions(options);
 			base.updateWidth();
 			base.toggleHeaders();
 			base.bind();
@@ -249,8 +251,11 @@
 
 		base.setOptions = function (options) {
 			base.options = $.extend({}, defaults, options);
+			base.$window = $(base.options.objWindow);
+			base.$head = $(base.options.objHead);
+			base.$document = $(base.options.objDocument);
 			base.$scrollableArea = $(base.options.scrollableArea);
-			base.isWindowScrolling = base.$scrollableArea[0] === window;
+			base.isWindowScrolling = base.$scrollableArea[0] === base.$window[0];
 		};
 
 		base.updateOptions = function (options) {
