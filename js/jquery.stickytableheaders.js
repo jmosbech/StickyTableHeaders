@@ -11,7 +11,7 @@
 			leftOffset: 0,
 			marginTop: 0,
 			scrollableArea: window,
-            zIndex: 3
+            		zIndex: 3
 		};
 
 	function Plugin (el, options) {
@@ -140,7 +140,7 @@
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
 							'left': newLeft,
-							'z-index': base.options.zIndex // #18: opacity bug
+							'z-index': base.options.zIndex
 						});
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
