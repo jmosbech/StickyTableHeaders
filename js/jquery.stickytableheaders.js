@@ -9,6 +9,7 @@
 		defaults = {
 			fixedOffset: 0,
 			leftOffset: 0,
+			marginTop: 0,
 			scrollableArea: window
 		};
 
@@ -136,7 +137,7 @@
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
-							'margin-top': 0,
+							'margin-top': base.options.marginTop,
 							'left': newLeft,
 							'z-index': 3 // #18: opacity bug
 						});
@@ -199,7 +200,12 @@
 				var width, $this = $(this);
 
 				if ($this.css('box-sizing') === 'border-box') {
-					width = $this[0].getBoundingClientRect().width; // #39: border-box bug
+					var boundingClientRect = $this[0].getBoundingClientRect();
+					if(boundingClientRect.width) {
+						width = boundingClientRect.width; // #39: border-box bug
+					} else {
+						width = boundingClientRect.right - boundingClientRect.left; // ie8 bug: getBoundingClientRect() does not have a width property
+					}
 				} else {
 					var $origTh = $('th', base.$originalHeader);
 					if ($origTh.css('border-collapse') === 'collapse') {

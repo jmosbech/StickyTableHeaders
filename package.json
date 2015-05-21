@@ -9,7 +9,8 @@
   ],
   "repository": "https://github.com/jmosbech/StickyTableHeaders",
   "author": "Jonas Mosbech <https://github.com/jmosbech>",
-  "version": "0.1.14",
+  "version": "0.1.15",
+  "main": "js/jquery.stickytableheaders.js",
   "devDependencies": {
     "grunt": "0.4.0",
     "grunt-contrib-jshint": "~0.3.0",
