@@ -58,6 +58,13 @@ As described in [pull request #33](https://github.com/jmosbech/StickyTableHeader
 $('table').stickyTableHeaders({fixedOffset: [new-offset]});
 ```
 
+###Events
+The plugin triggers the following events on the targeted `<table>` element:
+
+ - `clonedHeader.stickyTableHeaders`: When the header clone is created.
+ - `enabledStickiness.stickyTableHeaders`: When the sticky header is enabled.
+ - `disabledStickiness.stickyTableHeaders`: When the sticky header is disabled.
+
 Confused?
 ---------
 
