@@ -450,12 +450,17 @@
 			</tr>
 		</tbody>
 	</table>
+	<div style="height:2000px"></div>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="../js/jquery.stickytableheaders.js"></script>
 	<script>
-		$('table').on('clonedHeader.stickyTableHeaders', function(table, $clone){
-			console.log('header cloned', $clone);
+		$('table').on('clonedHeader.stickyTableHeaders', function(event){
+			console.log('header cloned', event);
+		}).on('enabledStickiness.stickyTableHeaders', function(event){
+			console.log('enabledStickiness', event);
+		}).on('disabledStickiness.stickyTableHeaders', function(event){
+			console.log('disabledStickiness', event);
 		});
 		$('table').stickyTableHeaders();
 	</script>
