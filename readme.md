@@ -10,7 +10,13 @@ The code is based on [this proof of concept](http://stackoverflow.com/questions/
 
 Installation
 ------------
-The best way to install is using [Bower](http://bower.io/):
+The best way to install is using [npm](https://www.npmjs.com/);
+
+```bash
+npm install sticky-table-headers
+```
+
+or [Bower](http://bower.io/):
 
 ```bash
 bower install StickyTableHeaders
