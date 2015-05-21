@@ -148,6 +148,7 @@
 							base.isSticky = true;
 							// make sure the width is correct: the user might have resized the browser while in static mode
 							base.updateWidth();
+							$this.trigger('enabledStickiness.' + name);
 						}
 						base.setPositionValues();
 					} else if (base.isSticky) {
@@ -155,6 +156,7 @@
 						base.$clonedHeader.css('display', 'none');
 						base.isSticky = false;
 						base.resetWidth($('td,th', base.$clonedHeader), $('td,th', base.$originalHeader));
+						$this.trigger('disabledStickiness.' + name);
 					}
 				});
 			}
