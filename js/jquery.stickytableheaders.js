@@ -50,7 +50,8 @@
 				$this.css('padding', 0);
 
 				base.$originalHeader = $('thead:first', this);
-				base.$clonedHeader = base.$originalHeader.clone();
+				base.$clonedHeader = base.$originalHeader.clone(); 
+                base.$originalHeader.attr("id", "originalHeader"); // #61 Mandatory indentifier setting. Needed to be able to use getElementById.
 				$this.trigger('clonedHeader.' + name, [base.$clonedHeader]);
 
 				base.$clonedHeader.addClass('tableFloatingHeader');
@@ -128,12 +129,14 @@
 
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
-
+                        
+                        headerWidth = document.getElementById('originalHeader').offsetHeight, // #61 Getting the offsetHeight with getElementById instead of $clonedHeader.height() significantly faster in Firefox. Note that the original header is used instead of the cloned one. This because the cloned one is hidden and therefore the offsetHeight is 0.
+                        
 						scrolledPastTop = base.isWindowScrolling ?
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
+								(offset.top + $this.height() - headerWidth - (base.isWindowScrolling ? 0 : newTopOffset)); // #61 Using headerWidth instead of $clonedHeader.height(). See above comment for explanation.
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
@@ -243,12 +246,17 @@
 
 		base.resetWidth = function ($clonedHeaders, $origHeaders) {
 			$clonedHeaders.each(function (index) {
-				var $this = $(this);
-				$origHeaders.eq(index).css({
-					'min-width': $this.css('min-width'),
-					'max-width': $this.css('max-width')
-				});
-			});
+                var $this, minWidth, maxWidth, id; //Moved variable declaration to the top.
+                $this = $(this);
+                id = index + 'stickyTD'; //#61 Creating an unique identifier for the TD/TH.
+                $origHeaders.eq(index).attr('id', id); //#61 Adding an ID to the TH/TD element to be able to use getElementById.
+                minWidth = document.getElementById(id).style.minWidth; //#61 Getting the minWidth with getElementById instead of $this.css('min-width') significantly faster in Firefox.
+                maxWidth = document.getElementById(id).style.maxWidth; //#61 Same as above only now for maxWidth.
+                $origHeaders.eq(index).css({
+                    'min-width': minWidth ? minWidth : '0px', //#61 Ternary to make sure the input is something jQuery understands.
+                    'max-width': maxWidth ? maxWidth : 'none' //#61 Same as above.
+                });
+            });
 		};
 
 		base.setOptions = function (options) {
