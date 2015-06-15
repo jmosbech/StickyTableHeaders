@@ -13,8 +13,7 @@
 			objDocument: document,
 			objHead: 'head',
 			objWindow: window,
-			scrollableArea: window,
-			cacheHeaderHeight: false
+			scrollableArea: window
 		};
 
 	function Plugin (el, options) {
@@ -34,9 +33,6 @@
 		// Cache DOM refs for performance reasons
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
-
-		// Cache header height for performance reasons
-		base.cachedHeaderHeight = null;
 
 		// Keep track of state
 		base.isSticky = false;
@@ -65,9 +61,9 @@
 				base.$originalHeader.after(base.$clonedHeader);
 
 				base.$printStyle = $('<style type="text/css" media="print">' +
-				'.tableFloatingHeader{display:none !important;}' +
-				'.tableFloatingHeaderOriginal{position:static !important;}' +
-				'</style>');
+					'.tableFloatingHeader{display:none !important;}' +
+					'.tableFloatingHeaderOriginal{position:static !important;}' +
+					'</style>');
 				base.$head.append(base.$printStyle);
 			});
 
@@ -117,41 +113,27 @@
 			base.$scrollableArea.off('.' + name, base.updateWidth);
 		};
 
-		// We debounce the functions bound to the scroll and resize events
-		base.debounce = function (fn, delay) {
-			var timer = null;
-			return function () {
-				var context = this, args = arguments;
-				clearTimeout(timer);
-				timer = setTimeout(function () {
-					fn.apply(context, args);
-				}, delay);
-			};
-		};
-
-		base.toggleHeaders = base.debounce(function () {
+		base.toggleHeaders = function () {
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
 						newLeft,
 						newTopOffset = base.isWindowScrolling ? (
-							isNaN(base.options.fixedOffset) ?
-								base.options.fixedOffset.outerHeight() :
-								base.options.fixedOffset
-						) :
-						base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),
+									isNaN(base.options.fixedOffset) ?
+									base.options.fixedOffset.outerHeight() :
+									base.options.fixedOffset
+								) :
+								base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),
 						offset = $this.offset(),
 
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
 
-						headerHeight = base.options.cacheHeaderHeight ? base.cachedHeaderHeight : base.$clonedHeader.height(),
-
 						scrolledPastTop = base.isWindowScrolling ?
-						scrollTop > offset.top :
-						newTopOffset > offset.top,
+								scrollTop > offset.top :
+								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-							(offset.top + $this.height() - headerHeight - (base.isWindowScrolling ? 0 : newTopOffset));
+								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
@@ -180,23 +162,23 @@
 					}
 				});
 			}
-		}, 0);
+		};
 
-		base.setPositionValues = base.debounce(function () {
+		base.setPositionValues = function () {
 			var winScrollTop = base.$window.scrollTop(),
 				winScrollLeft = base.$window.scrollLeft();
 			if (!base.isSticky ||
-				winScrollTop < 0 || winScrollTop + base.$window.height() > base.$document.height() ||
-				winScrollLeft < 0 || winScrollLeft + base.$window.width() > base.$document.width()) {
+					winScrollTop < 0 || winScrollTop + base.$window.height() > base.$document.height() ||
+					winScrollLeft < 0 || winScrollLeft + base.$window.width() > base.$document.width()) {
 				return;
 			}
 			base.$originalHeader.css({
 				'top': base.topOffset - (base.isWindowScrolling ? 0 : winScrollTop),
 				'left': base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft)
 			});
-		}, 0);
+		};
 
-		base.updateWidth = base.debounce(function () {
+		base.updateWidth = function () {
 			if (!base.isSticky) {
 				return;
 			}
@@ -212,12 +194,7 @@
 
 			// Copy row width from whole table
 			base.$originalHeader.css('width', base.$clonedHeader.width());
-
-			// If we're caching the height, we need to update the cached value when the width changes
-			if (base.options.cacheHeaderHeight) {
-				base.cachedHeaderHeight = base.$clonedHeader.height();
-			}
-		}, 0);
+		};
 
 		base.getWidth = function ($clonedHeaders) {
 			var widths = [];
