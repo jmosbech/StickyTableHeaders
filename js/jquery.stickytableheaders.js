@@ -13,7 +13,8 @@
 			objDocument: document,
 			objHead: 'head',
 			objWindow: window,
-			scrollableArea: window
+			scrollableArea: window,
+			cacheHeaderHeight: false
 		};
 
 	function Plugin (el, options) {
@@ -33,6 +34,9 @@
 		// Cache DOM refs for performance reasons
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
+
+		// Cache header height for performance reasons
+		base.cachedHeaderHeight = null;
 
 		// Keep track of state
 		base.isSticky = false;
@@ -113,7 +117,19 @@
 			base.$scrollableArea.off('.' + name, base.updateWidth);
 		};
 
-		base.toggleHeaders = function () {
+		// We debounce the functions bound to the scroll and resize events
+		base.debounce = function (fn, delay) {
+			var timer = null;
+			return function () {
+				var context = this, args = arguments;
+				clearTimeout(timer);
+				timer = setTimeout(function () {
+					fn.apply(context, args);
+				}, delay);
+			};
+		};
+
+		base.toggleHeaders = base.debounce(function () {
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
@@ -129,11 +145,13 @@
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
 						scrollLeft = base.$scrollableArea.scrollLeft(),
 
+						headerHeight = base.options.cacheHeaderHeight ? base.cachedHeaderHeight : base.$clonedHeader.height(),
+
 						scrolledPastTop = base.isWindowScrolling ?
 								scrollTop > offset.top :
 								newTopOffset > offset.top,
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
-								(offset.top + $this.height() - base.$clonedHeader.height() - (base.isWindowScrolling ? 0 : newTopOffset));
+							(offset.top + $this.height() - headerHeight - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
@@ -162,9 +180,9 @@
 					}
 				});
 			}
-		};
+		}, 0);
 
-		base.setPositionValues = function () {
+		base.setPositionValues = base.debounce(function () {
 			var winScrollTop = base.$window.scrollTop(),
 				winScrollLeft = base.$window.scrollLeft();
 			if (!base.isSticky ||
@@ -176,9 +194,9 @@
 				'top': base.topOffset - (base.isWindowScrolling ? 0 : winScrollTop),
 				'left': base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft)
 			});
-		};
+		}, 0);
 
-		base.updateWidth = function () {
+		base.updateWidth = base.debounce(function () {
 			if (!base.isSticky) {
 				return;
 			}
@@ -194,7 +212,12 @@
 
 			// Copy row width from whole table
 			base.$originalHeader.css('width', base.$clonedHeader.width());
-		};
+
+			// If we're caching the height, we need to update the cached value when the width changes
+			if (base.options.cacheHeaderHeight) {
+				base.cachedHeaderHeight = base.$clonedHeader.height();
+			}
+		}, 0);
 
 		base.getWidth = function ($clonedHeaders) {
 			var widths = [];
