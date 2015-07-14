@@ -13,9 +13,25 @@
 			objDocument: document,
 			objHead: 'head',
 			objWindow: window,
-			scrollableArea: window
+			scrollableArea: window,
+			debounce: 0
 		};
-
+	
+	function debounce(func, wait, immediate) {
+		var timeout;
+		return function() {
+			var context = this, args = arguments;
+			var later = function() {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+			var callNow = immediate && !timeout;
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+			if (callNow) func.apply(context, args);
+		};
+	};
+	
 	function Plugin (el, options) {
 		// To avoid scope issues, use 'base' instead of 'this'
 		// to reference this class from internal events and functions.
@@ -94,13 +110,23 @@
 		};
 
 		base.bind = function(){
-			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
-			if (!base.isWindowScrolling) {
-				base.$window.on('scroll.' + name + base.id, base.setPositionValues);
-				base.$window.on('resize.' + name + base.id, base.toggleHeaders);
+			var toggleHeaders = base.toggleHeaders;
+			var setPositionValues = base.setPositionValues;
+			var updateWidth = base.updateWidth;
+			
+			if (base.options.debounce) {
+				toggleHeaders = debounce(base.toggleHeaders, base.options.debounce);
+				setPositionValues = debounce(base.setPositionValues, base.options.debounce);
+				updateWidth = debounce(base.updateWidth, base.options.debounce);
 			}
-			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
-			base.$scrollableArea.on('resize.' + name, base.updateWidth);
+			
+			base.$scrollableArea.on('scroll.' + name, toggleHeaders);
+			if (!base.isWindowScrolling) {
+				base.$window.on('scroll.' + name + base.id, setPositionValues);
+				base.$window.on('resize.' + name + base.id, toggleHeaders);
+			}
+			base.$scrollableArea.on('resize.' + name, toggleHeaders);
+			base.$scrollableArea.on('resize.' + name, updateWidth);
 		};
 
 		base.unbind = function(){
