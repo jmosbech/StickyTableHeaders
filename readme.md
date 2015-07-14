@@ -64,6 +64,14 @@ As described in [pull request #33](https://github.com/jmosbech/StickyTableHeader
 $('table').stickyTableHeaders({fixedOffset: [new-offset]});
 ```
 
+####`debounce`
+Debounces the scroll/resize event being triggered too often. Use this if you have performance issues with scroll/resize.
+The headers will be toggled when user stopped scrolling for X milliseconds.
+
+```js
+$('table').stickyTableHeaders({debounce: 150});
+```
+
 ###Events
 The plugin triggers the following events on the targeted `<table>` element:
 
