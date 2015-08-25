@@ -4,7 +4,7 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     meta: {
-      version: '0.1.17',
+      version: '0.1.18',
       source: 'jquery.stickytableheaders.js',
       sourceMin: 'jquery.stickytableheaders.min.js'
     },
