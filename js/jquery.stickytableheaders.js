@@ -54,7 +54,7 @@
 				$this.trigger('clonedHeader.' + name, [base.$clonedHeader]);
 
 				base.$clonedHeader.addClass('tableFloatingHeader');
-				base.$clonedHeader.css('display', 'none');
+				base.$clonedHeader.css({display: 'none', opacity: 0.0});
 
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 
