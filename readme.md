@@ -64,6 +64,16 @@ As described in [pull request #33](https://github.com/jmosbech/StickyTableHeader
 $('table').stickyTableHeaders({fixedOffset: [new-offset]});
 ```
 
+####`cacheHeaderHeight`
+Performance tweak: When set to `true` the plugin will only recalculate the height of the header cells when the width of the table changes.
+
+Default value: `false`
+
+```js
+$('table').stickyTableHeaders({cacheHeaderHeight: true});
+```
+
+
 ###Events
 The plugin triggers the following events on the targeted `<table>` element:
 
