@@ -55,13 +55,10 @@ $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
 ####`scrollableArea`
-A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html)
-
-
-As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to re-initialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
+A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html):
 
 ```js
-$('table').stickyTableHeaders({fixedOffset: [new-offset]});
+$('table').stickyTableHeaders({scrollableArea: $('.scrollable-area')});
 ```
 
 ####`cacheHeaderHeight`
@@ -73,6 +70,12 @@ Default value: `false`
 $('table').stickyTableHeaders({cacheHeaderHeight: true});
 ```
 
+###Reinitialize
+As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to reinitialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
+
+```js
+$('table').stickyTableHeaders({fixedOffset: [new-offset]});
+```
 
 ###Events
 The plugin triggers the following events on the targeted `<table>` element:
