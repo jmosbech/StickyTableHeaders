@@ -70,6 +70,8 @@
 					'</style>');
 				base.$head.append(base.$printStyle);
 			});
+			
+			base.$clonedHeader.find("input, select").attr("disabled", true);
 
 			base.updateWidth();
 			base.toggleHeaders();
