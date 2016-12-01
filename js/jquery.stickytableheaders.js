@@ -9,6 +9,7 @@
 		defaults = {
 			fixedOffset: 0,
 			leftOffset: 0,
+			fixScrollLeft: false, /*true if have probleme with thead horizontal scroll*/
 			marginTop: 0,
 			objDocument: document,
 			objHead: 'head',
@@ -154,7 +155,10 @@
 							(offset.top + $this.height() - headerHeight - (base.isWindowScrolling ? 0 : newTopOffset));
 
 					if (scrolledPastTop && notScrolledPastBottom) {
-						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						newLeft = offset.left + base.options.leftOffset;
+			                        if (!base.options.fixScrollLeft) {
+			                            newLeft = newLeft - scrollLeft;
+			                        }
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
