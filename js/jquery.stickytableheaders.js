@@ -158,6 +158,7 @@
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
+                                                        'top': 0,
 							'left': newLeft,
 							'z-index': 3 // #18: opacity bug
 						});
