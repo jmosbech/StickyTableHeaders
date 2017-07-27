@@ -32,36 +32,36 @@ Initializing the plugin is pretty straight forward:
 $('table').stickyTableHeaders();
 ```
 
-###Tear down
+### Tear down
 To remove the plugin:
 
 ```js
 $('table').stickyTableHeaders('destroy');
 ```
 
-###Trigger an update manually
+### Trigger an update manually
 ```js
 $(window).trigger('resize.stickyTableHeaders');
 ```
 
-###Options
+### Options
 You can initialize the plugin with an options map to tweak the behavior. The following options are supported:
 
-####`fixedOffset`
+#### `fixedOffset`
 A number or jQuery object specifying how much the sticky header should be offset from the top of the page:
 
 ```js
 $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
-####`scrollableArea`
+#### `scrollableArea`
 A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html):
 
 ```js
 $('table').stickyTableHeaders({scrollableArea: $('.scrollable-area')});
 ```
 
-####`cacheHeaderHeight`
+#### `cacheHeaderHeight`
 Performance tweak: When set to `true` the plugin will only recalculate the height of the header cells when the width of the table changes.
 
 Default value: `false`
@@ -70,14 +70,14 @@ Default value: `false`
 $('table').stickyTableHeaders({cacheHeaderHeight: true});
 ```
 
-###Reinitialize
+### Reinitialize
 As described in [pull request #33](https://github.com/jmosbech/StickyTableHeaders/pull/33) responsive pages might need to reinitialize the plugin when the user resizes his browser. This is can be done by calling the plugin with the new options:
 
 ```js
 $('table').stickyTableHeaders({fixedOffset: [new-offset]});
 ```
 
-###Events
+### Events
 The plugin triggers the following events on the targeted `<table>` element:
 
  - `clonedHeader.stickyTableHeaders`: When the header clone is created.
