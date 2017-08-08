@@ -1,0 +1,20 @@
+{
+  "name": "jmosbech/StickyTableHeaders",
+  "description": "jQuery sticky table headers plugin",
+  "keywords": [
+    "jquery",
+    "sticky",
+    "table",
+    "headers"
+    ],
+  "homepage": "https://github.com/jmosbech/StickyTableHeaders",
+  "authors": [
+    {
+      "name": "Jonas Mosbech"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/jmosbech/StickyTableHeaders/issues"
+  },
+  "license": "MIT",
+}
