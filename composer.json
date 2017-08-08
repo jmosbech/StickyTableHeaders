@@ -1,5 +1,5 @@
 {
-  "name": "jmosbech/StickyTableHeaders",
+  "name": "jmosbech/sticky-table-headers",
   "description": "jQuery sticky table headers plugin",
   "keywords": [
     "jquery",
@@ -16,5 +16,5 @@
   "support": {
     "issues": "https://github.com/jmosbech/StickyTableHeaders/issues"
   },
-  "license": "MIT",
+  "license": "MIT"
 }
