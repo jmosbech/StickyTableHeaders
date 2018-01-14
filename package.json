@@ -5,7 +5,9 @@
     "jquery",
     "sticky",
     "table",
-    "headers"
+    "headers",
+    "jquery-plugin",
+    "ecosystem:jquery"
   ],
   "scripts": {
     "build": "grunt"
