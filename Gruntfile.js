@@ -3,13 +3,21 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     meta: {
-      version: '0.1.19',
       source: 'jquery.stickytableheaders.js',
       sourceMin: 'jquery.stickytableheaders.min.js'
     },
 
     uglify: {
+      options: {
+        banner:
+          '/*!\n' +
+          ' * StickyTableHeaders <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd HH:MM") %>)\n' +
+          ' * MIT licensed\n' +
+          ' * Copyright (C) Jonas Mosbech - https://github.com/jmosbech/StickyTableHeaders\n' +
+          ' */'
+      },
       standard: {
         files: {
           'js/<%= meta.sourceMin %>': ['js/<%= meta.source %>']
