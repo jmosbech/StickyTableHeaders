@@ -14,7 +14,7 @@
   },
   "repository": "https://github.com/jmosbech/StickyTableHeaders",
   "author": "Jonas Mosbech <https://github.com/jmosbech>",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "main": "js/jquery.stickytableheaders.js",
   "license": "MIT",
   "devDependencies": {
