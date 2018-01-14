@@ -1,5 +1,8 @@
 /*global module:false*/
+
 module.exports = function(grunt) {
+
+  grunt.loadNpmTasks('grunt-bower-version');
 
   // Project configuration.
   grunt.initConfig({
@@ -7,6 +10,10 @@ module.exports = function(grunt) {
     meta: {
       source: 'jquery.stickytableheaders.js',
       sourceMin: 'jquery.stickytableheaders.min.js'
+    },
+
+    bower_version: {
+      update: []
     },
 
     uglify: {
@@ -51,5 +58,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
   // Default task.
-  grunt.registerTask('default', ['jshint','uglify']);
+  grunt.registerTask('default', ['jshint','uglify', 'bower_version']);
 };
