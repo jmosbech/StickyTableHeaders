@@ -7,6 +7,9 @@
     "table",
     "headers"
   ],
+  "scripts": {
+    "build": "grunt"
+  },
   "repository": "https://github.com/jmosbech/StickyTableHeaders",
   "author": "Jonas Mosbech <https://github.com/jmosbech>",
   "version": "0.1.19",
