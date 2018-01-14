@@ -14,7 +14,8 @@
 			objHead: 'head',
 			objWindow: window,
 			scrollableArea: window,
-			cacheHeaderHeight: false
+			cacheHeaderHeight: false,
+			zIndex: 3
 		};
 
 	function Plugin (el, options) {
@@ -167,7 +168,7 @@
 							'margin-top': base.options.marginTop,
                                                         'top': 0,
 							'left': newLeft,
-							'z-index': 3 // #18: opacity bug
+							'z-index': base.options.zIndex
 						});
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
