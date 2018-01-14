@@ -163,6 +163,9 @@
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						if( base.options.ignoreLeftOffset === true  ){
+							newLeft = newLeft - offset.left;
+						}
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
