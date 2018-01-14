@@ -59,7 +59,7 @@ $('table').stickyTableHeaders({fixedOffset: $('#header')});
 ```
 
 #### `scrollableArea`
-A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo/scrollable-div.html):
+A DOM element or jQuery object. Allows you to overwrite which surrounding element is scrolling. Defaults to `window`. [Check this demo for an example](/demo/scrollable-div.html):
 
 ```js
 $('table').stickyTableHeaders({scrollableArea: $('.scrollable-area')});
@@ -98,7 +98,7 @@ The plugin triggers the following events on the targeted `<table>` element:
 Confused?
 ---------
 
-If any of this is confusing, please check out the [/demo](https://github.com/jmosbech/StickyTableHeaders/tree/master/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
+If any of this is confusing, please check out the [/demo](/demo) folder. There are a couple of examples in there. E.g. you can see how to use it with Twitter Bootstrap.
 
 Known Issues
 ------------
