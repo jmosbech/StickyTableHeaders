@@ -163,13 +163,15 @@
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						newLeft = offset.left - scrollLeft + base.options.leftOffset;
-						base.$originalHeader.css({
+						var styles={
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
-                                                        'top': 0,
 							'left': newLeft,
 							'z-index': base.options.zIndex
-						});
+						};
+						if(base.$originalHeader.get(0).styles.top=='')
+							styles.top=0;
+						base.$originalHeader.css(styles);
 						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
