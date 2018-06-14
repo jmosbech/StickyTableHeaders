@@ -177,14 +177,14 @@
 
 					if (scrolledPastTop && notScrolledPastBottom) {
 						base.leftOffset = offset.left - scrollLeft + base.options.leftOffset;
+						base.topOffset = newTopOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
-														'top': 0,
+							'top': base.topOffset - (base.isWindowScrolling ? 0 : base.$window.scrollTop()),
 							'left': base.leftOffset,
 							'z-index': base.options.zIndex
 						});
-						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
 						if (!base.isSticky) {
 							base.isSticky = true;
