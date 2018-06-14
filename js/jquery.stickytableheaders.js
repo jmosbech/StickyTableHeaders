@@ -15,7 +15,10 @@
 			objWindow: window,
 			scrollableArea: window,
 			cacheHeaderHeight: false,
-			zIndex: 3
+			cacheHeaderWidth: false,
+			cacheClippingContainerWidth: true,
+			zIndex: 3,
+			clippingContainerId: null
 		};
 
 	function Plugin (el, options) {
@@ -36,8 +39,10 @@
 		base.$clonedHeader = null;
 		base.$originalHeader = null;
 
-		// Cache header height for performance reasons
+		// Cache header height, width and clippingContainer width for performance reasons
 		base.cachedHeaderHeight = null;
+		base.cachedHeaderWidth = null;
+		base.cachedClippingContainerWidth = null;
 
 		// Keep track of state
 		base.isSticky = false;
@@ -77,6 +82,7 @@
 
 			base.updateWidth();
 			base.toggleHeaders();
+			base.updateHeaderCssPropertyClip();
 			base.bind();
 		};
 
@@ -164,7 +170,7 @@
 						notScrolledPastBottom;
 
 					if (scrolledPastTop) {
-						headerHeight = base.options.cacheHeaderHeight ? base.cachedHeaderHeight : base.$clonedHeader.height();
+						headerHeight = base.getHeaderHeight();
 						notScrolledPastBottom = (base.isWindowScrolling ? scrollTop : 0) <
 							(offset.top + $this.height() - headerHeight - (base.isWindowScrolling ? 0 : newTopOffset));
 					}
@@ -174,7 +180,7 @@
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
-                                                        'top': 0,
+														'top': 0,
 							'left': newLeft,
 							'z-index': base.options.zIndex
 						});
@@ -188,6 +194,7 @@
 							$this.trigger('enabledStickiness.' + name);
 						}
 						base.setPositionValues();
+						base.updateHeaderCssPropertyClip();
 					} else if (base.isSticky) {
 						base.$originalHeader.css('position', 'static');
 						base.$clonedHeader.css('display', 'none');
@@ -230,11 +237,37 @@
 			// Copy row width from whole table
 			base.$originalHeader.css('width', base.$clonedHeader.width());
 
-			// If we're caching the height, we need to update the cached value when the width changes
+			// If we're caching the height or width, we need to update the cached values when the width or height changes.
 			if (base.options.cacheHeaderHeight) {
 				base.cachedHeaderHeight = base.$clonedHeader.height();
 			}
+			if (base.options.cacheHeaderWidth) {
+				base.cachedHeaderWidth = base.$clonedHeader.width();
+			}
 		}, 0);
+
+		base.updateHeaderCssPropertyClip = function() {
+			if (base.$clippingContainer.length === 0) {
+				return;
+			}
+			var container = base.$clippingContainer,
+				containerOffset = container.offset(),
+				headerOffset = base.$originalHeader.offset(),
+				fromHeaderToContainer = containerOffset.left - headerOffset.left,
+				left = Math.max(0, fromHeaderToContainer),
+				right = Math.max(0, Math.min(base.getHeaderWidth(), fromHeaderToContainer + base.clippingContainerWidth())),
+				top = 0,
+				bottom = base.getHeaderHeight();
+			var clipString = 'rect(' + top + 'px,' + right + 'px,' + bottom + 'px,' + left + 'px)';
+			base.$originalHeader.css('clip', clipString);
+		};
+
+		base.clippingContainerWidth = function() {
+			if (!base.cachedClippingContainerWidth || !base.options.cacheClippingContainerWidth) {
+				base.cachedClippingContainerWidth = base.$clippingContainer.width();
+			}
+			return base.cachedClippingContainerWidth;
+		}
 
 		base.getWidth = function ($clonedHeaders) {
 			var widths = [];
@@ -291,6 +324,14 @@
 			});
 		};
 
+		base.getHeaderHeight = function() {
+			 return base.options.cacheHeaderHeight ? base.cachedHeaderHeight : base.$clonedHeader.height();
+		}
+
+		base.getHeaderWidth = function() {
+			return base.options.cacheHeaderWidth ? base.cachedHeaderWidth : base.$clonedHeader.width();
+		}
+
 		base.setOptions = function (options) {
 			base.options = $.extend({}, defaults, options);
 			base.$window = $(base.options.objWindow);
@@ -298,6 +339,7 @@
 			base.$document = $(base.options.objDocument);
 			base.$scrollableArea = $(base.options.scrollableArea);
 			base.isWindowScrolling = base.$scrollableArea[0] === base.$window[0];
+			base.$clippingContainer = $('#' + base.options.clippingContainerId);
 		};
 
 		base.updateOptions = function (options) {
