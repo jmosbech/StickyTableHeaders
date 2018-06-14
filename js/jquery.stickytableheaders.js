@@ -118,6 +118,7 @@
 			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
 			if (!base.isWindowScrolling) {
 				base.$window.on('scroll.' + name + base.id, base.setPositionValues);
+				base.$window.on('scroll.' + name + base.id, base.toggleHeaders);
 				base.$window.on('resize.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
@@ -150,7 +151,6 @@
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
-						newLeft,
 						newTopOffset = base.isWindowScrolling ? (
 									isNaN(base.options.fixedOffset) ?
 									base.options.fixedOffset.outerHeight() :
@@ -160,7 +160,7 @@
 						offset = $this.offset(),
 
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
-						scrollLeft = base.$scrollableArea.scrollLeft(),
+						scrollLeft = base.$window.scrollLeft(),
 
 						headerHeight,
 
@@ -176,15 +176,14 @@
 					}
 
 					if (scrolledPastTop && notScrolledPastBottom) {
-						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						base.leftOffset = offset.left - scrollLeft + base.options.leftOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
 														'top': 0,
-							'left': newLeft,
+							'left': base.leftOffset,
 							'z-index': base.options.zIndex
 						});
-						base.leftOffset = newLeft;
 						base.topOffset = newTopOffset;
 						base.$clonedHeader.css('display', '');
 						if (!base.isSticky) {
@@ -216,7 +215,7 @@
 			}
 			base.$originalHeader.css({
 				'top': base.topOffset - (base.isWindowScrolling ? 0 : winScrollTop),
-				'left': base.leftOffset - (base.isWindowScrolling ? 0 : winScrollLeft)
+				'left': base.leftOffset
 			});
 		}, 0);
 
