@@ -18,7 +18,8 @@
 			cacheHeaderWidth: false,
 			cacheClippingContainerWidth: true,
 			zIndex: 3,
-			clippingContainerId: null
+			clippingContainerId: null,
+			dynamicTopOffset: function() { return 0; }
 		};
 
 	function Plugin (el, options) {
@@ -151,12 +152,13 @@
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
-						newTopOffset = base.isWindowScrolling ? (
+						dynamicTopOffset = base.options.dynamicTopOffset(),
+						newTopOffset = dynamicTopOffset + (base.isWindowScrolling ? (
 									isNaN(base.options.fixedOffset) ?
 									base.options.fixedOffset.outerHeight() :
 									base.options.fixedOffset
 								) :
-								base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0),
+								base.$scrollableArea.offset().top + (!isNaN(base.options.fixedOffset) ? base.options.fixedOffset : 0)),
 						offset = $this.offset(),
 
 						scrollTop = base.$scrollableArea.scrollTop() + newTopOffset,
