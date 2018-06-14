@@ -63,6 +63,7 @@
 
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 
+				base.changeClonedHeaderIds(base.$clonedHeader);
 				base.$originalHeader.after(base.$clonedHeader);
 
 				base.$printStyle = $('<style type="text/css" media="print">' +
@@ -77,6 +78,13 @@
 			base.updateWidth();
 			base.toggleHeaders();
 			base.bind();
+		};
+
+		base.changeClonedHeaderIds = function($clonedHeader) {
+			$clonedHeader.find('*').addBack().filter('[id]').each(function() {
+				var $component = $(this);
+				$component.attr('id', $component.attr('id') + '-' + name + '-cloned');
+			});
 		};
 
 		base.destroy = function (){
