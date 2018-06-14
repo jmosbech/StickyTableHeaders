@@ -81,8 +81,8 @@
 			
 			base.$clonedHeader.find("input, select").attr("disabled", true);
 
-			base.updateWidth();
 			base.toggleHeaders();
+			base.updateWidth();
 			base.updateHeaderCssPropertyClip();
 			base.bind();
 		};
@@ -116,24 +116,24 @@
 		};
 
 		base.bind = function(){
-			base.$scrollableArea.on('scroll.' + name, base.toggleHeaders);
+			base.$scrollableArea.on('scroll.' + name, base.debouncedToggleHeaders);
 			if (!base.isWindowScrolling) {
 				base.$window.on('scroll.' + name + base.id, base.setPositionValues);
-				base.$window.on('scroll.' + name + base.id, base.toggleHeaders);
-				base.$window.on('resize.' + name + base.id, base.toggleHeaders);
+				base.$window.on('scroll.' + name + base.id, base.debouncedToggleHeaders);
+				base.$window.on('resize.' + name + base.id, base.debouncedToggleHeaders);
 			}
-			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
-			base.$scrollableArea.on('resize.' + name, base.updateWidth);
+			base.$scrollableArea.on('resize.' + name, base.debouncedToggleHeaders);
+			base.$scrollableArea.on('resize.' + name, base.debouncedUpdateWidth);
 		};
 
 		base.unbind = function(){
 			// unbind window events by specifying handle so we don't remove too much
-			base.$scrollableArea.off('.' + name, base.toggleHeaders);
+			base.$scrollableArea.off('.' + name, base.debouncedToggleHeaders);
 			if (!base.isWindowScrolling) {
 				base.$window.off('.' + name + base.id, base.setPositionValues);
-				base.$window.off('.' + name + base.id, base.toggleHeaders);
+				base.$window.off('.' + name + base.id, base.debouncedToggleHeaders);
 			}
-			base.$scrollableArea.off('.' + name, base.updateWidth);
+			base.$scrollableArea.off('.' + name, base.debouncedUpdateWidth);
 		};
 
 		// We debounce the functions bound to the scroll and resize events
@@ -148,7 +148,7 @@
 			};
 		};
 
-		base.toggleHeaders = base.debounce(function () {
+		base.toggleHeaders = function () {
 			if (base.$el) {
 				base.$el.each(function () {
 					var $this = $(this),
@@ -205,7 +205,9 @@
 					}
 				});
 			}
-		}, 0);
+		};
+
+		base.debouncedToggleHeaders = base.debounce(base.toggleHeaders, 0);
 
 		base.setPositionValues = base.debounce(function () {
 			var winScrollTop = base.$window.scrollTop(),
@@ -221,7 +223,7 @@
 			});
 		}, 0);
 
-		base.updateWidth = base.debounce(function () {
+		base.updateWidth = function () {
 			if (!base.isSticky) {
 				return;
 			}
@@ -245,7 +247,9 @@
 			if (base.options.cacheHeaderWidth) {
 				base.cachedHeaderWidth = base.$clonedHeader.width();
 			}
-		}, 0);
+		};
+
+		base.debouncedUpdateWidth = base.debounce(base.updateWidth, 0);
 
 		base.updateHeaderCssPropertyClip = function() {
 			if (base.$clippingContainer.length === 0) {
