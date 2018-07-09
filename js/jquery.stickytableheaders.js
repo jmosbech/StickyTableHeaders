@@ -16,7 +16,7 @@
 			scrollableArea: window,
 			cacheHeaderHeight: false,
 			zIndex: 3,
-			horizontalWrapper
+			horizontalWrapper: null
 		};
 
 	function Plugin (el, options) {
