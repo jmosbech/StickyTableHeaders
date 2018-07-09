@@ -15,7 +15,8 @@
 			objWindow: window,
 			scrollableArea: window,
 			cacheHeaderHeight: false,
-			zIndex: 3
+			zIndex: 3,
+			horizontalWrapper
 		};
 
 	function Plugin (el, options) {
@@ -162,7 +163,7 @@
 					}
 
 					if (scrolledPastTop && notScrolledPastBottom) {
-						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						newLeft = !base.options.horizontalWrapper ? offset.left - scrollLeft + base.options.leftOffset : base.options.horizontalWrapper.offset().left  - scrollLeft + base.options.leftOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
