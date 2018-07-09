@@ -74,6 +74,9 @@ Default value: `false`
 $('table').stickyTableHeaders({cacheHeaderHeight: true});
 ```
 
+####`horizontalWrapper`
+A DOM element or jQuery object. An optional element used to function as a wrapper to allow horizontal scrolling of tables with widths wider than the screen.
+
 #### z-index
 The plugin uses z-index to make the thead overlay the body. You can override the z-index value by passing in a `zIndex` option:
 
