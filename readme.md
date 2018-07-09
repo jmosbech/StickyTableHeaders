@@ -74,7 +74,7 @@ Default value: `false`
 $('table').stickyTableHeaders({cacheHeaderHeight: true});
 ```
 
-####`horizontalWrapper`
+#### horizontalWrapper
 A DOM element or jQuery object. An optional element used to function as a wrapper to allow horizontal scrolling of tables with widths wider than the screen.
 
 #### z-index
