@@ -15,7 +15,8 @@
 			objWindow: window,
 			scrollableArea: window,
 			cacheHeaderHeight: false,
-			zIndex: 3
+			zIndex: 3,
+			horizontalWrapper: null
 		};
 
 	function Plugin (el, options) {
@@ -162,7 +163,8 @@
 					}
 
 					if (scrolledPastTop && notScrolledPastBottom) {
-						newLeft = offset.left - scrollLeft + base.options.leftOffset;
+						var $horizontalWrapper = base.options.horizontalWrapper && !(base.options.horizontalWrapper instanceof jQuery) ? $(base.options.horizontalWrapper) : base.options.horizontalWrapper;
+						newLeft = !$horizontalWrapper ? offset.left - scrollLeft + base.options.leftOffset : $horizontalWrapper.offset().left  - scrollLeft + base.options.leftOffset;
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
@@ -219,8 +221,10 @@
 			var cellWidths = base.getWidth(base.$clonedHeaderCells);
 			base.setWidth(cellWidths, base.$clonedHeaderCells, base.$originalHeaderCells);
 
-			// Copy row width from whole table
-			base.$originalHeader.css('width', base.$clonedHeader.width());
+			// Copy row width from whole table or from the optional wrapper element
+			var $horizontalWrapper = base.options.horizontalWrapper && !(base.options.horizontalWrapper instanceof jQuery) ? $(base.options.horizontalWrapper) : base.options.horizontalWrapper;
+			var newWidth = $horizontalWrapper ? $horizontalWrapper.width() : base.$clonedHeader.width();
+			base.$originalHeader.css('width', newWidth);
 
 			// If we're caching the height, we need to update the cached value when the width changes
 			if (base.options.cacheHeaderHeight) {
