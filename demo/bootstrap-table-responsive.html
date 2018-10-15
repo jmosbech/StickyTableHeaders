@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--[if lt IE 8]><html lang="en" class="legacy"><![endif]-->
+<!--[if gte IE 8]><!--><html lang="en"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <title>Fixed Top Navbar Example for Bootstrap</title>
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        min-height: 2000px;
+        padding-top: 70px;
+      }
+      .tableFloatingHeaderOriginal th {
+        background-color: #fff;
+        border-bottom: 1px solid #DDD;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Twitter Bootstrap Demo</a>
+        </div>
+        <div class="navbar-collapse collapse">
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">
+      <h1>Twitter Bootstrap Demo</h1>
+      <p>Note that in order to make the table header look ok when scrolling we need to add a background color and a bottom border.</p>
+      <p>There is also a bug in IE7 that causes the leftmost column to resize when scrolling. Consider using conditional comments (see source) to make sure the plugin is not loaded in this browser.
+      <p>When using bootstraps <i>table-responsive</i> there are two scroll container. The window for vertical scrolling and the <i>table-responsive</i> div for horizontal scrolling. Make sure you add the <i>table-responsive</i> div as additional scrollable area to the stickytableheaders call parameters.</p>
+      </p>
+      <div class='table-responsive table-short' >
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Label</th>
+            <th>Text</th>
+          </tr>
+        </thead>
+        <tbody  onscroll="alert('aua')">
+          <tr>
+            <td>Very long text to demonstrate horizontal scrolling</td>
+            <td>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script src="../js/jquery.stickytableheaders.js"></script>
+
+  <script>
+    // adding filler rows
+    for(var i = 0; i < 3; i++){
+      $('tbody tr').clone().appendTo('table');
+    }
+    var offset = $('.navbar').height();
+    var bootstrapResponsiveTableDiv = $('.table-responsive');
+    $("html:not(.legacy) table").stickyTableHeaders({fixedOffset: offset, additionalScrollableAreas: [bootstrapResponsiveTableDiv]});
+  </script>
+  </body>
+</html>
