@@ -14,6 +14,7 @@
 			objHead: 'head',
 			objWindow: window,
 			scrollableArea: window,
+			additionalScrollableAreas: [],
 			cacheHeaderHeight: false,
 			zIndex: 3
 		};
@@ -108,6 +109,11 @@
 			}
 			base.$scrollableArea.on('resize.' + name, base.toggleHeaders);
 			base.$scrollableArea.on('resize.' + name, base.updateWidth);
+
+			$.each(base.$additionalScrollableAreas,function(index, additionalScrollableArea){
+				additionalScrollableArea.on('scroll', base.toggleHeaders);
+			});
+			
 		};
 
 		base.unbind = function(){
@@ -118,6 +124,10 @@
 				base.$window.off('.' + name + base.id, base.toggleHeaders);
 			}
 			base.$scrollableArea.off('.' + name, base.updateWidth);
+
+			$.each(base.$additionalScrollableAreas,function(index, additionalScrollableArea){
+				additionalScrollableArea.off('.', base.toggleHeaders);
+			});
 		};
 
 		// We debounce the functions bound to the scroll and resize events
@@ -289,6 +299,7 @@
 			base.$head = $(base.options.objHead);
 			base.$document = $(base.options.objDocument);
 			base.$scrollableArea = $(base.options.scrollableArea);
+			base.$additionalScrollableAreas = $(base.options.additionalScrollableAreas);
 			base.isWindowScrolling = base.$scrollableArea[0] === base.$window[0];
 		};
 
