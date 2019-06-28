@@ -71,7 +71,7 @@
 					'</style>');
 				base.$head.append(base.$printStyle);
 			});
-			
+
 			base.$clonedHeader.find("input, select").attr("disabled", true);
 
 			base.updateWidth();
@@ -166,7 +166,6 @@
 						base.$originalHeader.css({
 							'position': 'fixed',
 							'margin-top': base.options.marginTop,
-                                                        'top': 0,
 							'left': newLeft,
 							'z-index': base.options.zIndex
 						});
