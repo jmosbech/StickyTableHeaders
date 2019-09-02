@@ -29,7 +29,7 @@
 		base.id = id++;
 
 		// Listen for destroyed, call teardown
-		base.$el.bind('destroyed',
+		base.$el.on('destroyed',
 			$.proxy(base.teardown, base));
 
 		// Cache DOM refs for performance reasons
@@ -80,7 +80,7 @@
 		};
 
 		base.destroy = function (){
-			base.$el.unbind('destroyed', base.teardown);
+			base.$el.off('destroyed', base.teardown);
 			base.teardown();
 		};
 
