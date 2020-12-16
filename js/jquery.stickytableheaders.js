@@ -64,12 +64,14 @@
 				base.$originalHeader.addClass('tableFloatingHeaderOriginal');
 
 				base.$originalHeader.after(base.$clonedHeader);
-
-				base.$printStyle = $('<style type="text/css" media="print">' +
-					'.tableFloatingHeader{display:none !important;}' +
-					'.tableFloatingHeaderOriginal{position:static !important;}' +
-					'</style>');
-				base.$head.append(base.$printStyle);
+				
+				if (!base.id) {
+					base.$printStyle = $('<style type="text/css" media="print">' +
+						'.tableFloatingHeader{display:none !important;}' +
+						'.tableFloatingHeaderOriginal{position:static !important;}' +
+						'</style>');
+					base.$head.append(base.$printStyle);
+				}
 			});
 			
 			base.$clonedHeader.find("input, select").attr("disabled", true);
