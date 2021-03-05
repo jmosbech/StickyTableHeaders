@@ -22,6 +22,11 @@ or [Bower](http://bower.io/):
 bower install StickyTableHeaders
 ```
 
+or [Composer](https://getcomposer.org)
+```bash
+composer require jmosbech/sticky-table-headers
+```
+
 or by loading it directly from the [unpkg CDN](https://unpkg.com/sticky-table-headers):
 
 ```
